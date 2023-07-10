@@ -1,4 +1,10 @@
-const { dummy, totalLikes, favoriteBlog } = require("../utils/list_helper");
+const {
+  dummy,
+  totalLikes,
+  favoriteBlog,
+  mostBlogs,
+} = require("../utils/list_helper");
+
 const listWithOneBlog = [
   {
     _id: "5a422aa71b54a676234d17f8",
@@ -119,6 +125,29 @@ describe("test favoriteBlog", () => {
       title: "Canonical string reduction",
       author: "Edsger W. Dijkstra",
       likes: 12,
+    });
+  });
+});
+
+describe("test mostBlogs", () => {
+  test("test with 0 blogs", () => {
+    const result = mostBlogs([]);
+    expect(result).toBe(null);
+  });
+
+  test("test with 1 blog", () => {
+    const result = mostBlogs(listWithOneBlog);
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      blogs: 1,
+    });
+  });
+
+  test("test with several blogs", () => {
+    const result = mostBlogs(blogs);
+    expect(result).toEqual({
+      author: "Robert C. Martin",
+      blogs: 3,
     });
   });
 });
