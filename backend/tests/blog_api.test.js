@@ -44,3 +44,14 @@ test("blog is saved in the database", async () => {
   expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1);
   expect(blogsAtEnd).toContainEqual(reqResult.body);
 });
+
+test("likes default value is 0", async () => {
+  const newBlog = {
+    title: "test",
+    author: "Bob",
+    url: "bob.com",
+  };
+
+  const reqResult = await api.post("/api/blogs").send(newBlog).expect(201);
+  expect(reqResult.body).toHaveProperty("likes", 0);
+});
