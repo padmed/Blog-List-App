@@ -6,7 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const { mongoURL } = require("./utils/config");
 const logger = require("./utils/logger");
-const noteRouter = require("./controllers/notes");
+const blogRouter = require("./controllers/blogs");
 const {
   errorHandler,
   requestLogger,
@@ -26,7 +26,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
-app.use("/api/blogs", noteRouter);
+app.use("/api/blogs", blogRouter);
 app.use(unknownEndpoint);
 app.use(errorHandler);
 
