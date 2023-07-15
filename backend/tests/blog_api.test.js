@@ -32,6 +32,32 @@ describe("Initial tests", () => {
   });
 });
 
+describe("Viewing a specific blog", () => {
+  test("A blog can be viewed", async () => {
+    const blogs = await blogsInDb();
+    const blogToView = blogs[0];
+
+    const requestResult = await api
+      .get(`/api/blogs/${blogToView.id}`)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+
+    expect(requestResult.body).toEqual(blogToView);
+  });
+
+  test("Non-existing blog URL returns 404", async () => {
+    const id = await nonExistingId();
+    await api.get(`/api/blogs/${id}`).expect(404);
+  });
+
+  test("Malformated id returns 400", async () => {
+    const blogs = await Blog.find({});
+    const malformatedId = blogs[0].id + "urlBraker";
+
+    api.get(`/api/blogs/${malformatedId}`).expect(400);
+  });
+});
+
 describe("POST tests", () => {
   test("Blog is saved in the database", async () => {
     const newBlog = {
@@ -93,14 +119,21 @@ describe("DELETE tests", () => {
 
     await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
 
-    const notesAtEnd = await blogsInDb();
+    const blogsAtEnd = await blogsInDb();
 
-    expect(notesAtEnd).toHaveLength(initialBlogs.length - 1);
-    expect(notesAtEnd).not.toContainEqual(blogToDelete);
+    expect(blogsAtEnd).toHaveLength(initialBlogs.length - 1);
+    expect(blogsAtEnd).not.toContainEqual(blogToDelete);
   });
 
-  test("Deleting non-existing note returns 204 as well", async () => {
+  test("Deleting non-existing blog returns 204 as well", async () => {
     const id = await nonExistingId();
     await api.delete(`/api/blogs/${id}`).expect(204);
+  });
+
+  test("Deleting a blog with malformated id returns 400", async () => {
+    const blogs = await Blog.find({});
+    const malformatedId = blogs[0].id + "urlBraker";
+
+    api.delete(`/api/blogs/${malformatedId}`).expect(400);
   });
 });
