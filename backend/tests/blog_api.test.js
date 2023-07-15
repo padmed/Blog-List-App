@@ -55,3 +55,29 @@ test("likes default value is 0", async () => {
   const reqResult = await api.post("/api/blogs").send(newBlog).expect(201);
   expect(reqResult.body).toHaveProperty("likes", 0);
 });
+
+test("missing URL field returns 400", async () => {
+  const newBlog = {
+    title: "test",
+    author: "Bob",
+    likes: 0,
+  };
+
+  await api.post("/api/blogs").send(newBlog).expect(400);
+  const blogsAtEnd = await blogsInDb();
+
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length);
+});
+
+test("missing Title field returns 400", async () => {
+  const newBlog = {
+    author: "Bob",
+    url: "bob.com",
+    likes: 0,
+  };
+
+  await api.post("/api/blogs").send(newBlog).expect(400);
+  const blogsAtEnd = await blogsInDb();
+
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length);
+});
