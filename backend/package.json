@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
-    "dev": "nodemon index.js"
+    "start": "NODE_ENV=production node index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
+    "dev": "NODE_ENV=development nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +17,16 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "mongodb": "^5.7.0",
-    "mongoose": "^7.3.2"
+    "mongoose": "^7.3.2",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "globalTeardown": "./utils/teardown.js"
   }
 }
