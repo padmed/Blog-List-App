@@ -6,17 +6,11 @@ noteRouter.get("/", async (request, response) => {
   response.json(blogs);
 });
 
-noteRouter.post("/", (request, response, next) => {
-  const blog = new Blog(request.body);
+noteRouter.post("/", async (request, response, next) => {
+  const newBlog = new Blog(request.body);
+  const blogSaved = await newBlog.save();
 
-  blog
-    .save()
-    .then((result) => {
-      response.status(201).json(result);
-    })
-    .catch((e) => {
-      next(e);
-    });
+  response.status(201).json(blogSaved);
 });
 
 module.exports = noteRouter;
