@@ -29,3 +29,18 @@ test("id property is defined instead of _id", async () => {
     expect(blog).not.toHaveProperty("_id");
   });
 });
+
+test("blog is saved in the database", async () => {
+  const newBlog = {
+    title: "test",
+    author: "Bob",
+    url: "bob.com",
+    likes: 0,
+  };
+
+  const reqResult = await api.post("/api/blogs").send(newBlog).expect(201);
+  const blogsAtEnd = await blogsInDb();
+
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1);
+  expect(blogsAtEnd).toContainEqual(reqResult.body);
+});
