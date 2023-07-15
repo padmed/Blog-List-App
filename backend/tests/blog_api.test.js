@@ -58,7 +58,7 @@ describe("Viewing a specific blog", () => {
   });
 });
 
-describe("POST tests", () => {
+describe("POST request tests", () => {
   test("Blog is saved in the database", async () => {
     const newBlog = {
       title: "test",
@@ -112,7 +112,7 @@ describe("POST tests", () => {
   });
 });
 
-describe("DELETE tests", () => {
+describe("DELETE request tests", () => {
   test("DELETE method works", async () => {
     const blogs = await blogsInDb();
     const blogToDelete = blogs[0];
@@ -135,5 +135,73 @@ describe("DELETE tests", () => {
     const malformatedId = blogs[0].id + "urlBraker";
 
     api.delete(`/api/blogs/${malformatedId}`).expect(400);
+  });
+});
+
+describe("PUT request tests", () => {
+  test("Updating a blog works", async () => {
+    const blogs = await blogsInDb();
+    const blogToUpdate = blogs[0];
+    const newBlog = {
+      title: "test blog",
+      author: "test",
+      url: "test.com",
+      likes: 0,
+    };
+
+    const updatedBlog = await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(newBlog)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+
+    delete updatedBlog.body.id;
+    expect(updatedBlog.body).toEqual(newBlog);
+    expect(blogs.length).toBe(initialBlogs.length);
+  });
+
+  test("Setting title to empty string returns 400", async () => {
+    const blogs = await blogsInDb();
+    const blogToUpdate = blogs[0];
+    const newBlog = {
+      title: "",
+    };
+
+    await api.put(`/api/blogs/${blogToUpdate.id}`).send(newBlog).expect(400);
+  });
+
+  test("Setting URL to empty string returns 400", async () => {
+    const blogs = await blogsInDb();
+    const blogToUpdate = blogs[0];
+    const newBlog = {
+      url: "",
+    };
+
+    await api.put(`/api/blogs/${blogToUpdate.id}`).send(newBlog).expect(400);
+  });
+
+  test("Updating non-existing blog returns 404", async () => {
+    const id = await nonExistingId();
+    const newBlog = {
+      title: "test blog",
+      author: "test",
+      url: "test.com",
+      likes: 0,
+    };
+
+    await api.put(`/api/blogs/${id}`).send(newBlog).expect(404);
+  });
+
+  test("Updating a blog with malformated id returns 400", async () => {
+    const blogs = await blogsInDb();
+    const malformatedId = blogs[0].id + "idBraker";
+    const newBlog = {
+      title: "test blog",
+      author: "test",
+      url: "test.com",
+      likes: 0,
+    };
+
+    await api.put(`/api/blogs/${malformatedId}`).send(newBlog).expect(400);
   });
 });

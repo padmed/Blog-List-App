@@ -28,6 +28,7 @@ const nonExistingId = async () => {
     url: "bob.com",
     likes: 1232,
   });
+
   const blogSaved = await blog.save();
   const id = blogSaved.id;
   await Blog.findByIdAndRemove(id);
