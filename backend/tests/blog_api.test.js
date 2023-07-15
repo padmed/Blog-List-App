@@ -1,7 +1,7 @@
 const app = require("../app");
 const supertest = require("supertest");
 const Blog = require("../models/blog");
-const { initialBlogs } = require("./list_api_helper");
+const { initialBlogs, blogsInDb } = require("./list_api_helper");
 
 const api = supertest(app);
 
@@ -20,4 +20,12 @@ test("/api/blogs GET method works", async () => {
     .expect("Content-Type", /application\/json/);
 
   expect(request.body).toHaveLength(initialBlogs.length);
+});
+
+test("id property is defined instead of _id", async () => {
+  const blogs = await blogsInDb();
+  blogs.forEach((blog) => {
+    expect(blog).toHaveProperty("id");
+    expect(blog).not.toHaveProperty("_id");
+  });
 });
