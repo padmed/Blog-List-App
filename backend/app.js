@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const { mongoURL } = require("./utils/config");
 const logger = require("./utils/logger");
 const blogRouter = require("./controllers/blogs");
+const usersRouter = require("./controllers/users");
 const {
   errorHandler,
   requestLogger,
@@ -27,6 +28,7 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 app.use("/api/blogs", blogRouter);
+app.use("/api/users", usersRouter);
 app.use(unknownEndpoint);
 app.use(errorHandler);
 
