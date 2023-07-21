@@ -17,7 +17,7 @@ usersRouter.post("/", async (request, response) => {
     return response.status(400).json({
       error: "ValidationError",
       errorMessage:
-        "User validation failed: Password must be provided and should be at least 3 characters long",
+        "User validation failed: Password must be provided and must be at least 3 characters long",
     });
   }
 
