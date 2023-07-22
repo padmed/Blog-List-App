@@ -66,7 +66,7 @@ describe("When there's initially one user", () => {
   });
 });
 
-describe.only("Invalid users are not created", () => {
+describe("Invalid users are not created", () => {
   test("User without the username is not created", async () => {
     const newUser = {
       name: "user",
