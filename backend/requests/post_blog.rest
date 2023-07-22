@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR1ZHVjaGEiLCJpZCI6IjY0YmMyZjk1YzU0MThlODJmMWQ4ZGUwMCIsImlhdCI6MTY5MDA1NDU2OH0.yyxPdIw4xfzSgU5ZVNjIOnIcdMye1Qh24J50cfWiHD0
 
 {
-  "title": "duducha's blog",
+  "title": "miau's blog",
   "author": "Bob",
   "url": "bob.com",
   "likes": 1232

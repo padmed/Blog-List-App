@@ -46,8 +46,24 @@ blogRouter.post("/", async (request, response) => {
 });
 
 blogRouter.delete("/:id", async (request, response) => {
-  const { id } = request.params;
-  await Blog.findByIdAndRemove(id);
+  const blogId = request.params.id;
+  const token = request.token;
+  if (!token) {
+    return response.status(401).json({ error: "Missing token" });
+  }
+
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  const blogToDelete = await Blog.findById(blogId);
+
+  if (blogToDelete.user.toString() === decodedToken.id) {
+    await Blog.findByIdAndDelete(blogId);
+  } else {
+    response.status(401).json({
+      error: "Invalid Token",
+      message: "Blog cannot be deleted because of invalid token",
+    });
+  }
+
   response.status(204).end();
 });
 
