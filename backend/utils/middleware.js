@@ -1,3 +1,4 @@
+const { request, response } = require("express");
 const logger = require("./logger");
 
 const errorHandler = (error, request, response, next) => {
@@ -35,4 +36,20 @@ const unknownEndpoint = (request, response, next) => {
   next();
 };
 
-module.exports = { errorHandler, requestLogger, unknownEndpoint };
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get("authorization");
+
+  if (authorization && authorization.startsWith("bearer")) {
+    const token = authorization.replace("bearer ", "");
+    request.token = token;
+  }
+
+  next();
+};
+
+module.exports = {
+  errorHandler,
+  requestLogger,
+  unknownEndpoint,
+  tokenExtractor,
+};

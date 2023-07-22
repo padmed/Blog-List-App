@@ -13,6 +13,7 @@ const {
   errorHandler,
   requestLogger,
   unknownEndpoint,
+  tokenExtractor,
 } = require("./utils/middleware");
 
 logger.info("Connecting to MongoDB");
@@ -28,6 +29,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.use(tokenExtractor);
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);

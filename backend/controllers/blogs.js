@@ -22,22 +22,13 @@ blogRouter.get("/:id", async (request, response) => {
   }
 });
 
-const extractToken = (request) => {
-  let authorization = request.get("Authorization");
-  if (authorization && authorization.startsWith("bearer")) {
-    authorization = authorization.replace("bearer ", "");
-    return authorization;
-  }
-  return null;
-};
-
 blogRouter.post("/", async (request, response) => {
-  const extractedToken = extractToken(request);
-  if (!extractedToken) {
+  const token = request.token;
+  if (!token) {
     return response.status(401).json({ error: "Missing token" });
   }
 
-  const decodedToken = jwt.verify(extractToken(request), process.env.SECRET);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!decodedToken) {
     return response.status(401).json({ error: "Invalid token" });
   }
