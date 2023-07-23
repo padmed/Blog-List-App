@@ -1,6 +1,4 @@
-const { default: mongoose } = require("mongoose");
 const Blog = require("../models/blog");
-
 const initialBlogs = [
   {
     title: "blog 1",

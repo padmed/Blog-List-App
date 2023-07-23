@@ -24,4 +24,15 @@ const testValidationOnFaulty = async (testProps) => {
   return reqResult;
 };
 
-module.exports = { usersInDb, testValidationOnFaulty };
+const getToken = async (testProps) => {
+  const username = testProps.username;
+  const password = testProps.password;
+
+  const reqResult = await api.post("/api/login").send({ username, password });
+  const tokenObj = reqResult.body;
+  tokenObj.token = `bearer ${tokenObj.token}`;
+
+  return tokenObj;
+};
+
+module.exports = { usersInDb, testValidationOnFaulty, getToken };

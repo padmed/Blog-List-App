@@ -46,7 +46,6 @@ blogRouter.delete("/:id", userExtractor, async (request, response) => {
 
   if (user && blogToDelete.user.toString() === user.id) {
     await Blog.findByIdAndDelete(blogId);
-
     const updatedBlogs = user.blogs.filter(
       (blog) => blog.toString() !== blogToDelete.id
     );
