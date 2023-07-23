@@ -2,6 +2,7 @@ const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const { userExtractor } = require("../utils/middleware");
 
 blogRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", {
@@ -22,19 +23,9 @@ blogRouter.get("/:id", async (request, response) => {
   }
 });
 
-blogRouter.post("/", async (request, response) => {
-  const token = request.token;
-  if (!token) {
-    return response.status(401).json({ error: "Missing token" });
-  }
-
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!decodedToken) {
-    return response.status(401).json({ error: "Invalid token" });
-  }
-
+blogRouter.post("/", userExtractor, async (request, response) => {
   const newBlog = new Blog(request.body);
-  const user = await User.findOne({ username: decodedToken.username });
+  const user = request.user;
 
   user.blogs = user.blogs.concat(newBlog.id);
   await user.save();
@@ -45,18 +36,22 @@ blogRouter.post("/", async (request, response) => {
   response.status(201).json(blogSaved);
 });
 
-blogRouter.delete("/:id", async (request, response) => {
+blogRouter.delete("/:id", userExtractor, async (request, response) => {
   const blogId = request.params.id;
-  const token = request.token;
-  if (!token) {
-    return response.status(401).json({ error: "Missing token" });
+  const user = request.user;
+  const blogToDelete = await Blog.findById(blogId);
+  if (!blogToDelete) {
+    return response.status(404).end();
   }
 
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  const blogToDelete = await Blog.findById(blogId);
-
-  if (blogToDelete.user.toString() === decodedToken.id) {
+  if (user && blogToDelete.user.toString() === user.id) {
     await Blog.findByIdAndDelete(blogId);
+
+    const updatedBlogs = user.blogs.filter(
+      (blog) => blog.toString() !== blogToDelete.id
+    );
+    user.blogs = updatedBlogs;
+    user.save();
   } else {
     response.status(401).json({
       error: "Invalid Token",

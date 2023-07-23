@@ -1,5 +1,7 @@
 const { request, response } = require("express");
 const logger = require("./logger");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
 const errorHandler = (error, request, response, next) => {
   logger.error("--------------");
@@ -47,9 +49,20 @@ const tokenExtractor = (request, response, next) => {
   next();
 };
 
+const userExtractor = async (request, response, next) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  const user = decodedToken
+    ? await User.findOne({ username: decodedToken.username })
+    : null;
+
+  request.user = user;
+  next();
+};
+
 module.exports = {
   errorHandler,
   requestLogger,
   unknownEndpoint,
   tokenExtractor,
+  userExtractor,
 };

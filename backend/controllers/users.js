@@ -13,6 +13,7 @@ usersRouter.get("/", async (request, response) => {
 
 usersRouter.post("/", async (request, response) => {
   const { username, name, password } = request.body;
+  console.log(request.body);
 
   let passwordHash;
   if (password && password.length >= 3) {
