@@ -5,12 +5,17 @@ import LoginForm from "./components/LogInForm";
 import loginService from "./services/login";
 import UserInApp from "./components/UserInApp";
 import CreateBlogForm from "./components/CreateBlogForm";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [notification, setNotification] = useState({
+    message: "",
+    status: null,
+  });
   const [newBlog, setNewBlog] = useState({
     title: "",
     author: "",
@@ -52,8 +57,9 @@ const App = () => {
       setUser(user);
       setUsername("");
       setPassword("");
+      showNotification(`${user.name} is logged in`, true);
     } catch (e) {
-      console.log("invalid credentials");
+      showNotification(`Invalid username or password`, false);
     }
   };
 
@@ -68,25 +74,44 @@ const App = () => {
     try {
       const addedBlog = await blogService.addBlog(newBlog, user.token);
       setBlogs([...blogs, addedBlog]);
+      showNotification(`A new blog "${addedBlog.title}" added`, true);
     } catch (e) {
-      console.log("Please log in again");
+      const error = e.response.data.errorMessage;
+      console.log(e);
+      showNotification(error, false);
     }
+  };
+
+  const showNotification = (message, status) => {
+    setNotification({ message, status });
+    setTimeout(() => {
+      setNotification({ message: "", status: null });
+    }, 1500);
   };
 
   if (!user)
     return (
-      <LoginForm
-        handleUsernameChange={handleInputChange(setUsername)}
-        handlePasswordChange={handleInputChange(setPassword)}
-        handleLogin={handleLogin}
-        usernameValue={username}
-        passwordValue={password}
-      />
+      <>
+        {notification.status === false && (
+          <Notification notification={notification} />
+        )}
+
+        <LoginForm
+          handleUsernameChange={handleInputChange(setUsername)}
+          handlePasswordChange={handleInputChange(setPassword)}
+          handleLogin={handleLogin}
+          usernameValue={username}
+          passwordValue={password}
+        />
+      </>
     );
 
   return (
     <div>
       <h2>blogs</h2>
+      {notification.status !== null && (
+        <Notification notification={notification} />
+      )}
       <UserInApp name={user.name} handleLogout={handleLogout} />
       <CreateBlogForm
         inputValues={newBlog}
