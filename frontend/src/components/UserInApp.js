@@ -1,9 +1,9 @@
 const UserInApp = (props) => {
   return (
     <p>
-      {`logged in as ${props.name} `}
+      {`Logged in as ${props.name} `}
       <button type="submit" onClick={props.handleLogout}>
-        log out
+        Log out
       </button>
     </p>
   );
