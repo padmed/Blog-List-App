@@ -10,8 +10,6 @@ import Notification from "./components/Notification";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [notification, setNotification] = useState({
     message: "",
     status: null,
@@ -35,11 +33,6 @@ const App = () => {
     }
   }, []);
 
-  const handleInputChange = (setState) => (event) => {
-    const inputValue = event.target.value;
-    setState(inputValue);
-  };
-
   const handleBlogInputChange = (event) => {
     const propertyToChange = event.target.id;
     const valueToChange = event.target.value;
@@ -49,14 +42,12 @@ const App = () => {
     }
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleLoggedUser = async (user) => {
+    const { username, password } = user;
     try {
       const user = await loginService.getUser({ username, password });
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setUser(user);
-      setUsername("");
-      setPassword("");
       showNotification(`${user.name} is logged in`, true);
     } catch (e) {
       showNotification(`Invalid username or password`, false);
@@ -95,14 +86,7 @@ const App = () => {
         {notification.status === false && (
           <Notification notification={notification} />
         )}
-
-        <LoginForm
-          handleUsernameChange={handleInputChange(setUsername)}
-          handlePasswordChange={handleInputChange(setPassword)}
-          handleLogin={handleLogin}
-          usernameValue={username}
-          passwordValue={password}
-        />
+        <LoginForm handleLoggedUser={handleLoggedUser} />
       </>
     );
 

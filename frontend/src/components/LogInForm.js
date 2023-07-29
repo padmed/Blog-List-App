@@ -1,20 +1,31 @@
-const LoginForm = (props) => {
+import { useState } from "react";
+const LoginForm = ({ handleLoggedUser }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    handleLoggedUser({ username, password });
+    setUsername("");
+    setPassword("");
+  };
+
   return (
     <>
       <h1>Log in to application</h1>
-      <form onSubmit={props.handleLogin}>
+      <form onSubmit={handleLogin}>
         <div>
           <label>username</label>
           <input
-            onChange={props.handleUsernameChange}
-            value={props.usernameValue}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
           ></input>
         </div>
         <div>
           <label>password</label>
           <input
-            onChange={props.handlePasswordChange}
-            value={props.passwordValue}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           ></input>
         </div>
         <button type="submit">log in</button>
