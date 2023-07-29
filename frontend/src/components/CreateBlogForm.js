@@ -2,7 +2,7 @@ const CreateBlogForm = (props) => {
   const inputs = props.inputValues;
   return (
     <div>
-      <h2>Create new</h2>
+      <h3>Create new</h3>
       <form onSubmit={props.handleCreateBlog}>
         <div>
           <label htmlFor="title">Title</label>
