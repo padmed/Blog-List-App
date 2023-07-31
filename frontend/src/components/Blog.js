@@ -13,6 +13,8 @@ const Blog = ({ blog }) => {
   const forBlog = { ...blogStyle, display: isHidden ? "" : "none" };
   const forCompleteBlog = { ...blogStyle, display: isHidden ? "none" : "" };
 
+  const name = blog.user.name ? blog.user.name : blog.temporaryName;
+  console.log(name);
   return (
     <div>
       <div style={forBlog}>
@@ -28,7 +30,7 @@ const Blog = ({ blog }) => {
         <div>
           Likes {blog.likes} <button>Like</button>
         </div>
-        <div>{blog.user.name}</div>
+        <div>{name}</div>
       </div>
     </div>
   );

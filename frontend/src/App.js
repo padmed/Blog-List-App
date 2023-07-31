@@ -51,6 +51,7 @@ const App = () => {
   const saveNewBlog = async (newBlog) => {
     try {
       const addedBlog = await blogService.addBlog(newBlog, user.token);
+      addedBlog.temporaryName = user.name;
       setBlogs([...blogs, addedBlog]);
       showNotification(`A new blog "${addedBlog.title}" added`, true);
       blogFormRef.current.toggleVisibility();
