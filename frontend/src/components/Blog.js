@@ -1,7 +1,37 @@
-const Blog = ({blog}) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>  
-)
+import { useState } from "react";
 
-export default Blog
+const Blog = ({ blog }) => {
+  const [isHidden, setIsHidden] = useState(false);
+  const toggleVisibility = () => setIsHidden(!isHidden);
+
+  const blogStyle = {
+    border: "3px solid grey",
+    padding: "10px",
+    margin: "10px",
+  };
+
+  const forBlog = { ...blogStyle, display: isHidden ? "" : "none" };
+  const forCompleteBlog = { ...blogStyle, display: isHidden ? "none" : "" };
+
+  return (
+    <div>
+      <div style={forBlog}>
+        {blog.title} {blog.author}{" "}
+        <button onClick={toggleVisibility}>View</button>
+      </div>
+      <div style={forCompleteBlog}>
+        <div>
+          {blog.title} {blog.author}{" "}
+          <button onClick={toggleVisibility}>Hide</button>
+        </div>
+        <div>{blog.url}</div>
+        <div>
+          Likes {blog.likes} <button>Like</button>
+        </div>
+        <div>{blog.user.name}</div>
+      </div>
+    </div>
+  );
+};
+
+export default Blog;
