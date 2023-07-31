@@ -1,18 +1,25 @@
 import axios from "axios";
 const baseUrl = "/api/blogs";
+let token = null;
+
+const setToken = (value) => {
+  token = `bearer ${value}`;
+};
 
 const getAll = () => {
   const request = axios.get(baseUrl);
   return request.then((response) => response.data);
 };
 
-const addBlog = async (newBlog, token) => {
+const addBlog = async (newBlog) => {
+  console.log(token);
   const config = {
-    headers: { authorization: `bearer ${token}` },
+    headers: { authorization: token },
   };
   const request = await axios.post(baseUrl, newBlog, config);
   return request.data;
 };
 
+const updateBlog = async (updatedBlog) => {};
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, addBlog };
+export default { getAll, addBlog, setToken };

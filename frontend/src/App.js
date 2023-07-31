@@ -27,6 +27,7 @@ const App = () => {
     if (userInStorage) {
       const user = JSON.parse(userInStorage);
       setUser(user);
+      blogService.setToken(user.token);
     }
   }, []);
 
@@ -36,6 +37,7 @@ const App = () => {
       const user = await loginService.getUser({ username, password });
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       setUser(user);
+      blogService.setToken(user.token);
       showNotification(`${user.name} is logged in`, true);
     } catch (e) {
       showNotification(`Invalid username or password`, false);
@@ -45,12 +47,13 @@ const App = () => {
   const handleLogout = (event) => {
     event.preventDefault();
     setUser(null);
+    blogService.setToken(null);
     window.localStorage.clear();
   };
 
   const saveNewBlog = async (newBlog) => {
     try {
-      const addedBlog = await blogService.addBlog(newBlog, user.token);
+      const addedBlog = await blogService.addBlog(newBlog);
       addedBlog.temporaryName = user.name;
       setBlogs([...blogs, addedBlog]);
       showNotification(`A new blog "${addedBlog.title}" added`, true);
