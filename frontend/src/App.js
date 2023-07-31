@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import LoginForm from "./components/LogInForm";
@@ -15,6 +15,7 @@ const App = () => {
     message: "",
     status: null,
   });
+  const blogFormRef = useRef("miau");
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -52,6 +53,7 @@ const App = () => {
       const addedBlog = await blogService.addBlog(newBlog, user.token);
       setBlogs([...blogs, addedBlog]);
       showNotification(`A new blog "${addedBlog.title}" added`, true);
+      blogFormRef.current.toggleVisibility();
     } catch (e) {
       const error = e.response.data.errorMessage;
       console.log(e);
@@ -83,7 +85,7 @@ const App = () => {
         <Notification notification={notification} />
       )}
       <UserInApp name={user.name} handleLogout={handleLogout} />
-      <TogglableForm buttonLabel={"Add new blog"}>
+      <TogglableForm buttonLabel={"Add new blog"} ref={blogFormRef}>
         <BlogForm saveNewBlog={saveNewBlog} />
       </TogglableForm>
       {blogs.map((blog) => (
