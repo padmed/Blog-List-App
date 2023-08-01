@@ -35,4 +35,15 @@ usersRouter.post("/", async (request, response) => {
   response.status(201).json(savedUser);
 });
 
+usersRouter.get("/:id", async (request, response) => {
+  const { id } = request.params;
+  const userFound = await User.findById(id);
+
+  if (userFound) {
+    response.status(200).json(userFound);
+  } else {
+    response.status(404).end();
+  }
+});
+
 module.exports = usersRouter;
