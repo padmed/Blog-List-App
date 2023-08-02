@@ -7,6 +7,7 @@ import UserInApp from "./components/UserInApp";
 import BlogForm from "./components/BlogForm";
 import Notification from "./components/Notification";
 import TogglableForm from "./components/TogglableForm";
+import userService from "./services/users";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -54,7 +55,14 @@ const App = () => {
   const saveNewBlog = async (newBlog) => {
     try {
       const addedBlog = await blogService.addBlog(newBlog);
-      addedBlog.temporaryName = user.name;
+      const userId = addedBlog.user;
+      const createdBy = await userService.findUser(userId);
+      addedBlog.user = {
+        username: createdBy.username,
+        name: createdBy.name,
+        id: createdBy.id,
+      };
+
       setBlogs([...blogs, addedBlog]);
       showNotification(`A new blog "${addedBlog.title}" added`, true);
       blogFormRef.current.toggleVisibility();
@@ -84,6 +92,23 @@ const App = () => {
     setBlogs(updatedBlogs);
   };
 
+  const removeBlog = async (blogToRemove) => {
+    const confirmation = window.confirm(`Delete ${blogToRemove.title}?`);
+    try {
+      if (confirmation) {
+        await blogService.removeBlog(blogToRemove.id);
+        const filteredBlogs = blogs.filter(
+          (blog) => blog.id !== blogToRemove.id
+        );
+        setBlogs(filteredBlogs);
+        showNotification("Deleted Succesfully", true);
+      }
+    } catch (e) {
+      const error = "Couldn't delete a blog";
+      showNotification(error, false);
+    }
+  };
+
   if (!user)
     return (
       <>
@@ -96,7 +121,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h2>Blogs</h2>
       {notification.status !== null && (
         <Notification notification={notification} />
       )}
@@ -107,7 +132,13 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateBlog}
+            removeBlog={removeBlog}
+            user={user}
+          />
         ))}
     </div>
   );

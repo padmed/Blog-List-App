@@ -1,8 +1,10 @@
 import { useState } from "react";
 // Take the blog variable out in the App and handle like increase in app component!!!
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, user, removeBlog }) => {
   const [isHidden, setIsHidden] = useState(false);
   const toggleVisibility = () => setIsHidden(!isHidden);
+  const blogCreatedBy = blog.user;
+  const loggedUser = user;
 
   const blogStyle = {
     border: "3px solid grey",
@@ -13,12 +15,17 @@ const Blog = ({ blog, updateBlog }) => {
   const forBlog = { ...blogStyle, display: isHidden ? "" : "none" };
   const forCompleteBlog = { ...blogStyle, display: isHidden ? "none" : "" };
 
-  const name = blog.user.name ? blog.user.name : blog.temporaryName;
-  const id = blog.user.id ? blog.user.id : blog.user;
-
   const handleLike = () => {
-    const updatedBlog = { ...blog, likes: blog.likes + 1, user: id };
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+      user: blogCreatedBy.id,
+    };
     updateBlog(updatedBlog);
+  };
+
+  const handleDelete = () => {
+    removeBlog(blog);
   };
 
   return (
@@ -36,7 +43,12 @@ const Blog = ({ blog, updateBlog }) => {
         <div>
           Likes {blog.likes} <button onClick={handleLike}>Like</button>
         </div>
-        <div>{name}</div>
+        <div>{blog.user.name}</div>
+        <div>
+          {blogCreatedBy.username === loggedUser.username && (
+            <button onClick={handleDelete}>Delete</button>
+          )}
+        </div>
       </div>
     </div>
   );

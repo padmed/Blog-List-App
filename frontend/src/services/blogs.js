@@ -24,5 +24,14 @@ const updateBlog = async (updatedBlog) => {
   const request = await axios.put(`${baseUrl}/${blogId}`, updatedBlog);
   return request.data;
 };
+
+const removeBlog = async (id) => {
+  const config = {
+    headers: { authorization: token },
+  };
+
+  const removedBlog = await axios.delete(`${baseUrl}/${id}`, config);
+  return removedBlog.data;
+};
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, addBlog, setToken, updateBlog };
+export default { getAll, addBlog, setToken, updateBlog, removeBlog };
