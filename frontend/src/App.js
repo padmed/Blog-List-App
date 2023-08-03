@@ -1,123 +1,131 @@
-import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
-import blogService from "./services/blogs";
-import LoginForm from "./components/LogInForm";
-import loginService from "./services/login";
-import UserInApp from "./components/UserInApp";
-import BlogForm from "./components/BlogForm";
-import Notification from "./components/Notification";
-import TogglableForm from "./components/TogglableForm";
-import userService from "./services/users";
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
+import { useState, useEffect, useRef } from 'react'
+import Blog from './components/Blog'
+import blogService from './services/blogs'
+import LoginForm from './components/LogInForm'
+import loginService from './services/login'
+import UserInApp from './components/UserInApp'
+import BlogForm from './components/BlogForm'
+import Notification from './components/Notification'
+import TogglableForm from './components/TogglableForm'
+import userService from './services/users'
 
-const App = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState(null);
+function App() {
+  const [blogs, setBlogs] = useState([])
+  const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({
-    message: "",
+    message: '',
     status: null,
-  });
-  const blogFormRef = useRef("miau");
+  })
+  const blogFormRef = useRef('miau')
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+    blogService.getAll().then((blogsFromDb) => setBlogs(blogsFromDb))
+  }, [])
 
   useEffect(() => {
-    const userInStorage = window.localStorage.getItem("loggedUser");
+    // eslint-disable-next-line no-undef
+    let userInStorage = window.localStorage.getItem('loggedUser')
 
     if (userInStorage) {
-      const user = JSON.parse(userInStorage);
-      setUser(user);
-      blogService.setToken(user.token);
+      userInStorage = JSON.parse(userInStorage)
+      setUser(userInStorage)
+      blogService.setToken(userInStorage.token)
     }
-  }, []);
+  }, [])
 
-  const handleLoggedUser = async (user) => {
-    const { username, password } = user;
+  const showNotification = (message, status) => {
+    setNotification({ message, status })
+    setTimeout(() => {
+      setNotification({ message: '', status: null })
+    }, 1500)
+  }
+
+  const handleLoggedUser = async (userToLogin) => {
+    const { username, password } = userToLogin
     try {
-      const user = await loginService.getUser({ username, password });
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      setUser(user);
-      blogService.setToken(user.token);
-      showNotification(`${user.name} is logged in`, true);
+      const loggedUser = await loginService.getUser({ username, password })
+      // eslint-disable-next-line no-undef
+      window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
+      setUser(loggedUser)
+      blogService.setToken(loggedUser.token)
+      showNotification(`${loggedUser.name} is logged in`, true)
     } catch (e) {
-      showNotification(`Invalid username or password`, false);
+      showNotification('Invalid username or password', false)
     }
-  };
+  }
 
   const handleLogout = (event) => {
-    event.preventDefault();
-    setUser(null);
-    blogService.setToken(null);
-    window.localStorage.clear();
-  };
+    event.preventDefault()
+    setUser(null)
+    blogService.setToken(null)
+    // eslint-disable-next-line no-undef
+    window.localStorage.clear()
+  }
 
   const saveNewBlog = async (newBlog) => {
     try {
-      const addedBlog = await blogService.addBlog(newBlog);
-      const userId = addedBlog.user;
-      const createdBy = await userService.findUser(userId);
+      const addedBlog = await blogService.addBlog(newBlog)
+      const userId = addedBlog.user
+      const createdBy = await userService.findUser(userId)
       addedBlog.user = {
         username: createdBy.username,
         name: createdBy.name,
         id: createdBy.id,
-      };
-
-      setBlogs([...blogs, addedBlog]);
-      showNotification(`A new blog "${addedBlog.title}" added`, true);
-      blogFormRef.current.toggleVisibility();
-    } catch (e) {
-      const error = e.response.data.errorMessage;
-      console.log(e);
-      showNotification(error, false);
-    }
-  };
-
-  const showNotification = (message, status) => {
-    setNotification({ message, status });
-    setTimeout(() => {
-      setNotification({ message: "", status: null });
-    }, 1500);
-  };
-
-  const updateBlog = async (blog) => {
-    const updatedBlog = await blogService.updateBlog(blog);
-    const updatedBlogs = blogs.map((blog) => {
-      if (blog.id === updatedBlog.id) {
-        return (blog = updatedBlog);
       }
-      return blog;
-    });
 
-    setBlogs(updatedBlogs);
-  };
+      setBlogs([...blogs, addedBlog])
+      showNotification(`A new blog "${addedBlog.title}" added`, true)
+      blogFormRef.current.toggleVisibility()
+    } catch (e) {
+      const error = e.response.data.errorMessage
+      console.log(e)
+      showNotification(error, false)
+    }
+  }
+
+  const updateBlog = async (blogToUpdate) => {
+    const updatedBlog = await blogService.updateBlog(blogToUpdate)
+    const updatedBlogsState = blogs.map((blog) => {
+      if (blog.id === updatedBlog.id) {
+        const updated = updatedBlog
+        return updated
+      }
+      return blog
+    })
+
+    setBlogs(updatedBlogsState)
+  }
 
   const removeBlog = async (blogToRemove) => {
-    const confirmation = window.confirm(`Delete ${blogToRemove.title}?`);
+    // eslint-disable-next-line no-undef
+    const confirmation = window.confirm(`Delete ${blogToRemove.title}?`)
     try {
       if (confirmation) {
-        await blogService.removeBlog(blogToRemove.id);
+        await blogService.removeBlog(blogToRemove.id)
         const filteredBlogs = blogs.filter(
-          (blog) => blog.id !== blogToRemove.id
-        );
-        setBlogs(filteredBlogs);
-        showNotification("Deleted Succesfully", true);
+          (blog) => blog.id !== blogToRemove.id,
+        )
+        setBlogs(filteredBlogs)
+        showNotification('Deleted Succesfully', true)
       }
     } catch (e) {
-      const error = "Couldn't delete a blog";
-      showNotification(error, false);
+      const error = 'Couldn\'t delete a blog'
+      showNotification(error, false)
     }
-  };
+  }
 
   if (!user)
     return (
+      // eslint-disable-next-line react/jsx-filename-extension
       <>
         {notification.status === false && (
           <Notification notification={notification} />
         )}
         <LoginForm handleLoggedUser={handleLoggedUser} />
       </>
-    );
+    )
 
   return (
     <div>
@@ -126,7 +134,7 @@ const App = () => {
         <Notification notification={notification} />
       )}
       <UserInApp name={user.name} handleLogout={handleLogout} />
-      <TogglableForm buttonLabel={"Add new blog"} ref={blogFormRef}>
+      <TogglableForm buttonLabel="Add new blog" ref={blogFormRef}>
         <BlogForm saveNewBlog={saveNewBlog} />
       </TogglableForm>
       {blogs
@@ -141,7 +149,7 @@ const App = () => {
           />
         ))}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

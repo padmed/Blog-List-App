@@ -1,42 +1,45 @@
-import { useState } from "react";
-// Take the blog variable out in the App and handle like increase in app component!!!
-const Blog = ({ blog, updateBlog, user, removeBlog }) => {
-  const [isHidden, setIsHidden] = useState(false);
-  const toggleVisibility = () => setIsHidden(!isHidden);
-  const blogCreatedBy = blog.user;
-  const loggedUser = user;
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/button-has-type */
+import { useState } from 'react'
+import PropTypes from 'prop-types'
+
+function Blog({ blog, updateBlog, user, removeBlog }) {
+  const [isHidden, setIsHidden] = useState(false)
+  const toggleVisibility = () => setIsHidden(!isHidden)
+  const blogCreatedBy = blog.user
+  const loggedUser = user
 
   const blogStyle = {
-    border: "3px solid grey",
-    padding: "10px",
-    margin: "10px",
-  };
+    border: '3px solid grey',
+    padding: '10px',
+    margin: '10px',
+  }
 
-  const forBlog = { ...blogStyle, display: isHidden ? "" : "none" };
-  const forCompleteBlog = { ...blogStyle, display: isHidden ? "none" : "" };
+  const forBlog = { ...blogStyle, display: isHidden ? '' : 'none' }
+  const forCompleteBlog = { ...blogStyle, display: isHidden ? 'none' : '' }
 
   const handleLike = () => {
     const updatedBlog = {
       ...blog,
       likes: blog.likes + 1,
       user: blogCreatedBy.id,
-    };
-    updateBlog(updatedBlog);
-  };
+    }
+    updateBlog(updatedBlog)
+  }
 
   const handleDelete = () => {
-    removeBlog(blog);
-  };
+    removeBlog(blog)
+  }
 
   return (
     <div>
       <div style={forBlog}>
-        {blog.title} {blog.author}{" "}
+        {blog.title} {blog.author}{' '}
         <button onClick={toggleVisibility}>View</button>
       </div>
       <div style={forCompleteBlog}>
         <div>
-          {blog.title} {blog.author}{" "}
+          {blog.title} {blog.author}{' '}
           <button onClick={toggleVisibility}>Hide</button>
         </div>
         <div>{blog.url}</div>
@@ -51,7 +54,15 @@ const Blog = ({ blog, updateBlog, user, removeBlog }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Blog;
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  updateBlog: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  removeBlog: PropTypes.func.isRequired
+}
+
+
+export default Blog

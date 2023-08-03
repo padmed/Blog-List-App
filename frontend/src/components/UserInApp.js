@@ -1,4 +1,6 @@
-const UserInApp = (props) => {
+import PropTypes from 'prop-types'
+
+function UserInApp(props) {
   return (
     <p>
       {`Logged in as ${props.name} `}
@@ -6,7 +8,12 @@ const UserInApp = (props) => {
         Log out
       </button>
     </p>
-  );
-};
+  )
+}
 
-export default UserInApp;
+UserInApp.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+}
+
+export default UserInApp
