@@ -4,7 +4,7 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 function Blog({ blog, updateBlog, user, removeBlog }) {
-  const [isHidden, setIsHidden] = useState(false)
+  const [isHidden, setIsHidden] = useState(true)
   const toggleVisibility = () => setIsHidden(!isHidden)
   const blogCreatedBy = blog.user
   const loggedUser = user
@@ -15,8 +15,8 @@ function Blog({ blog, updateBlog, user, removeBlog }) {
     margin: '10px',
   }
 
-  const forBlog = { ...blogStyle, display: isHidden ? '' : 'none' }
-  const forCompleteBlog = { ...blogStyle, display: isHidden ? 'none' : '' }
+  const forPreviewedBlog = { ...blogStyle, display: isHidden ? '' : 'none' }
+  const forViewedBlog = { ...blogStyle, display: isHidden ? 'none' : '' }
 
   const handleLike = () => {
     const updatedBlog = {
@@ -31,13 +31,14 @@ function Blog({ blog, updateBlog, user, removeBlog }) {
     removeBlog(blog)
   }
 
+
   return (
     <div>
-      <div style={forBlog}>
+      <div style={forPreviewedBlog} className='previewedBlog'>
         {blog.title} {blog.author}{' '}
         <button onClick={toggleVisibility}>View</button>
       </div>
-      <div style={forCompleteBlog}>
+      <div style={forViewedBlog} className='viewedBlog'>
         <div>
           {blog.title} {blog.author}{' '}
           <button onClick={toggleVisibility}>Hide</button>
