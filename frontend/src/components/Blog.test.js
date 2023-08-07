@@ -19,7 +19,7 @@ test('Blog is rendered in initial state', () => {
 test('Complete blog is shown when clicking on the button', async () => {
   const { container } = testHelpers.renderBlog()
 
-  const viewButton = screen.getByRole('button', /view/i)
+  const viewButton = screen.getByRole('button', { name: /view/i })
   const user = userEvent.setup()
   await user.click(viewButton)
 
@@ -33,4 +33,20 @@ test('Complete blog is shown when clicking on the button', async () => {
   expect(viewedBlog).toHaveTextContent(testHelpers.blog.likes)
   expect(viewedBlog).toHaveTextContent(testHelpers.blog.title)
   expect(viewedBlog).toHaveTextContent(testHelpers.blog.author)
+})
+
+test('Event handler is called when like button is pressed', async () => {
+  testHelpers.renderBlog()
+
+  const viewButton = screen.getByRole('button', { name: /view/i })
+  const user = userEvent.setup()
+  await user.click(viewButton)
+
+  const mockLikeHandler = testHelpers.mockUpdateBlog
+  const likeButton = screen.getByRole('button', { name: /like/i })
+  await user.click(likeButton)
+  expect(mockLikeHandler.mock.calls).toHaveLength(1)
+
+  await user.click(likeButton)
+  expect(mockLikeHandler.mock.calls).toHaveLength(2)
 })
