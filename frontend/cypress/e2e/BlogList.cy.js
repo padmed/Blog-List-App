@@ -79,6 +79,43 @@ describe('BlogList', function () {
         cy.get('@firstBlog').contains('url of the first blog')
         cy.get('@firstBlog').contains('Likes')
       })
+
+      describe('When the blog is fully viewed', function () {
+        beforeEach(function () {
+          cy.contains('first blog').contains('View').click()
+        })
+
+        it('Blog can be liked', function () {
+          cy.contains('Likes').contains('Like').click()
+          cy.contains('Likes 1')
+        })
+
+        it('Blog can be deleted', function () {
+          cy.contains('Delete').click()
+          cy.contains('Deleted Succesfully')
+          cy.should('not.contain', 'first blog')
+        } )
+      })
+
+      describe('When another user logs in', function () {
+        beforeEach(function () {
+          cy.clearAllLocalStorage()
+          cy.visit('')
+          const anotherUser = {
+            name: 'another tester',
+            username: 'test2',
+            password: 'test2'
+          }
+
+          cy.addNewUser(anotherUser)
+          cy.loginUser({ username: anotherUser.username, password: anotherUser.password })
+        })
+
+        it('Blog cannot be deleted by another user', function () {
+          cy.contains('first blog').contains('View').click()
+          cy.contains('first blog').parent().should('not.contain', 'Delete')
+        })
+      })
     })
   })
 })
