@@ -31,3 +31,18 @@ Cypress.Commands.add('loginUser', ({ username, password }) => {
     cy.visit('')
   })
 })
+
+Cypress.Commands.add('createBlog', ({ title, author, url }) => {
+  const token = 'bearer ' + JSON.parse(window.localStorage.getItem('loggedUser')).token
+
+  cy.log(token)
+  cy.request({
+    method: 'POST',
+    url: `${Cypress.env('BACKEND')}/api/blogs`,
+    body: { title, author, url },
+    headers: {
+      Authorization: token
+    }
+  })
+  cy.visit('')
+})

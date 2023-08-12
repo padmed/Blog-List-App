@@ -55,5 +55,30 @@ describe('BlogList', function () {
 
       cy.contains('title of a blog author of a blog')
     })
+
+    describe.only('When the blogs are created', function () {
+      beforeEach(function () {
+        const fistBlog = {
+          title: 'first blog',
+          author: 'author of the first blog',
+          url: 'url of the first blog'
+        }
+        cy.createBlog(fistBlog)
+
+        const secondBlog = {
+          title: 'second blog',
+          author: 'author of the second blog',
+          url: 'url of the second blog'
+        }
+        cy.createBlog(secondBlog)
+      })
+
+      it('Blog can be fully viewed', function () {
+        cy.contains('first blog').contains('View').click()
+        cy.contains('first blog').parent().as('firstBlog')
+        cy.get('@firstBlog').contains('url of the first blog')
+        cy.get('@firstBlog').contains('Likes')
+      })
+    })
   })
 })
