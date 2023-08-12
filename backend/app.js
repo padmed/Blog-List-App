@@ -9,6 +9,7 @@ const logger = require("./utils/logger");
 const blogRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const testingRouter = require('./controllers/test')
 const {
   errorHandler,
   requestLogger,
@@ -31,9 +32,15 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 app.use(tokenExtractor);
+
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
+
+if(process.env.NODE_ENV === 'test'){
+  app.use('/api/testing', testingRouter)
+}
+
 app.use(unknownEndpoint);
 app.use(errorHandler);
 
