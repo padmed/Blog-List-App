@@ -10,7 +10,7 @@ const Notification = ({ notification }) => {
     borderRadius: '5px',
   }
   const success = {
-    border: '4px solid green',
+    border: '4px solid rgb(0, 128, 0)',
     color: 'green',
     backgroundColor: '#aaf0d1',
     margin: '5px',

@@ -1,16 +1,16 @@
 
 describe('BlogList', function () {
   beforeEach(function () {
-    cy.request('POST', 'http://localhost:3003/api/testing/reset')
+    cy.request('POST', `${Cypress.env('BACKEND')}/api/testing/reset`)
 
     const newUser = {
       name: 'tester',
       username: 'test',
       password: 'test'
     }
-    cy.request('POST', 'http://localhost:3003/api/users', newUser)
+    cy.request('POST', `${Cypress.env('BACKEND')}/api/users`, newUser)
 
-    cy.visit('http://localhost:3000/')
+    cy.visit('')
   })
 
   it('Login page can be opened', function () {
@@ -34,6 +34,26 @@ describe('BlogList', function () {
       cy.contains('Invalid username or password')
         .parent()
         .should('have.css','border', '4px solid rgb(255, 0, 0)')
+    })
+  })
+
+  describe('While logged in', function () {
+    beforeEach(function () {
+      cy.loginUser({ username: 'test', password: 'test' })
+    })
+
+    it('Blog can be created', function () {
+      cy.contains('Add new blog').click()
+      cy.get('#title').type('title of a blog')
+      cy.get('#author').type('author of a blog')
+      cy.get('#url').type('url of a blog')
+      cy.get('#createBlogButton').click()
+
+      cy.contains('A new blog "title of a blog" added')
+        .parent()
+        .should('have.css', 'border', '4px solid rgb(0, 128, 0)')
+
+      cy.contains('title of a blog author of a blog')
     })
   })
 })
