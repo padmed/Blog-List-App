@@ -80,6 +80,14 @@ describe('BlogList', function () {
         cy.get('@firstBlog').contains('Likes')
       })
 
+      it('Blogs are sorted in order by likes', function () {
+        cy.contains('second blog').contains('View').click()
+        cy.contains('second blog').parent().as('blogToLike')
+        cy.get('@blogToLike').contains('Like').click()
+        cy.get('@blogToLike').contains('Like').click()
+        cy.get('.blog').eq(0).should('contain', 'second blog')
+      })
+
       describe('When the blog is fully viewed', function () {
         beforeEach(function () {
           cy.contains('first blog').contains('View').click()

@@ -33,7 +33,7 @@ function Blog({ blog, updateBlog, user, removeBlog }) {
 
 
   return (
-    <div>
+    <div className='blog'>
       <div style={forPreviewedBlog} className='previewedBlog'>
         {blog.title} {blog.author}{' '}
         <button onClick={toggleVisibility}>View</button>
