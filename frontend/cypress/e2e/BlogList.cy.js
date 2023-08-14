@@ -84,6 +84,7 @@ describe('BlogList', function () {
         cy.contains('second blog').contains('View').click()
         cy.contains('second blog').parent().as('blogToLike')
         cy.get('@blogToLike').contains('Like').click()
+        cy.wait(500)
         cy.get('@blogToLike').contains('Like').click()
         cy.get('.blog').eq(0).should('contain', 'second blog')
       })
