@@ -15,7 +15,6 @@ const {
   requestLogger,
   unknownEndpoint,
   tokenExtractor,
-  userExtractor,
 } = require("./utils/middleware");
 
 logger.info("Connecting to MongoDB");
