@@ -5,8 +5,6 @@
   "dependencies": {
     "axios": "^1.2.3",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.9.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -19,7 +17,8 @@
     "eject": "react-scripts eject",
     "server": "cd ../backend/ && npm run dev",
     "eslint": "eslint .",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -45,9 +44,12 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "cypress": "^12.17.3",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.14.0",
     "eslint-plugin-jest": "^27.2.3",
-    "prettier": "^3.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
     "prop-types": "^15.8.1"
   }
 }

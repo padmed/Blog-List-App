@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 function UserInApp(props) {
   return (
@@ -8,12 +8,12 @@ function UserInApp(props) {
         Log out
       </button>
     </p>
-  )
+  );
 }
 
 UserInApp.propTypes = {
   name: PropTypes.string.isRequired,
   handleLogout: PropTypes.func.isRequired,
-}
+};
 
-export default UserInApp
+export default UserInApp;
