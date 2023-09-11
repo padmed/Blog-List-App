@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const Notification = ({ notification }) => {
+const Notification = () => {
+  const notification = useSelector((state) => state.notification);
+
   const failed = {
     border: "4px solid red",
     color: "#8B0000",
@@ -27,7 +29,4 @@ const Notification = ({ notification }) => {
   );
 };
 
-Notification.propTypes = {
-  notification: PropTypes.object,
-};
 export default Notification;
