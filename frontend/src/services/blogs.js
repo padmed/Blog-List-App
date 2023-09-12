@@ -19,13 +19,14 @@ const addBlog = async (newBlog) => {
   return request.data;
 };
 
-const updateBlog = async (updatedBlog) => {
-  const blogId = updatedBlog.id;
-  const request = await axios.put(`${baseUrl}/${blogId}`, updatedBlog);
+const updateBlog = async (blogToUpdate) => {
+  const blogId = blogToUpdate.id;
+  const request = await axios.put(`${baseUrl}/${blogId}`, blogToUpdate);
   return request.data;
 };
 
-const removeBlog = async (id) => {
+const removeBlog = async (blogToDelete) => {
+  const id = blogToDelete.id;
   const config = {
     headers: { authorization: token },
   };

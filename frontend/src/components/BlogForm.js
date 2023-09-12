@@ -75,7 +75,6 @@ const BlogForm = ({ blogFormRef }) => {
 };
 
 BlogForm.propTypes = {
-  saveNewBlog: PropTypes.func.isRequired,
   blogFormRef: PropTypes.object.isRequired,
 };
 

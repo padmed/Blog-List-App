@@ -1,19 +1,25 @@
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../reducers/userReducer";
+import blogService from "../services/blogs";
 
-function UserInApp(props) {
+function UserInApp() {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    blogService.setToken(null);
+    window.localStorage.clear();
+  };
+
   return (
     <p>
-      {`Logged in as ${props.name} `}
-      <button type="submit" onClick={props.handleLogout}>
+      {`Logged in as ${user.name} `}
+      <button type="submit" onClick={handleLogout}>
         Log out
       </button>
     </p>
   );
 }
-
-UserInApp.propTypes = {
-  name: PropTypes.string.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-};
 
 export default UserInApp;

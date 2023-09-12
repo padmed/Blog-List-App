@@ -2,12 +2,16 @@
 /* eslint-disable react/button-has-type */
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { likeBlog, deleteBlog } from "../reducers/blogReducer";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../reducers/notificationReducer";
 
-function Blog({ blog, updateBlog, user, removeBlog }) {
+function Blog({ blog, user }) {
   const [isHidden, setIsHidden] = useState(true);
   const toggleVisibility = () => setIsHidden(!isHidden);
   const blogCreatedBy = blog.user;
   const loggedUser = user;
+  const dispatch = useDispatch();
 
   const blogStyle = {
     border: "3px solid grey",
@@ -24,11 +28,21 @@ function Blog({ blog, updateBlog, user, removeBlog }) {
       likes: blog.likes + 1,
       user: blogCreatedBy.id,
     };
-    updateBlog(updatedBlog);
+    dispatch(likeBlog(updatedBlog));
   };
 
-  const handleDelete = () => {
-    removeBlog(blog);
+  const handleDelete = async () => {
+    const confirmation = window.confirm(`Delete ${blog.title}?`);
+    if (confirmation) {
+      try {
+        // eslint-disable-next-line no-unused-vars
+        const deletedBlog = await dispatch(deleteBlog(blog));
+        dispatch(setNotification("Deleted Succesfully", true));
+      } catch (e) {
+        const error = "Couldn't delete a blog";
+        dispatch(setNotification(error, false));
+      }
+    }
   };
 
   return (
@@ -59,9 +73,7 @@ function Blog({ blog, updateBlog, user, removeBlog }) {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  updateBlog: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  removeBlog: PropTypes.func.isRequired,
 };
 
 export default Blog;
