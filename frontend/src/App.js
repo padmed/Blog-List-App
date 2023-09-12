@@ -12,16 +12,17 @@ import TogglableForm from "./components/TogglableForm";
 import userService from "./services/users";
 import { setNotification } from "./reducers/notificationReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { initBlogs } from "./reducers/blogReducer";
 
 function App() {
-  const [blogs, setBlogs] = useState([]);
+  const blogs = useSelector((state) => state.blogs);
   const [user, setUser] = useState(null);
   const notification = useSelector((state) => state.notification);
   const blogFormRef = useRef("");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    blogService.getAll().then((blogsFromDb) => setBlogs(blogsFromDb));
+    dispatch(initBlogs());
   }, []);
 
   useEffect(() => {
@@ -57,56 +58,34 @@ function App() {
     window.localStorage.clear();
   };
 
-  const saveNewBlog = async (newBlog) => {
-    try {
-      const addedBlog = await blogService.addBlog(newBlog);
-      const userId = addedBlog.user;
-      const createdBy = await userService.findUser(userId);
-      addedBlog.user = {
-        username: createdBy.username,
-        name: createdBy.name,
-        id: createdBy.id,
-      };
-
-      setBlogs([...blogs, addedBlog]);
-      dispatch(setNotification(`A new blog "${addedBlog.title}" added`, true));
-      blogFormRef.current.toggleVisibility();
-    } catch (e) {
-      const error = e.response.data.errorMessage;
-      console.log(e);
-      dispatch(setNotification(error, false));
-    }
-  };
-
   const updateBlog = async (blogToUpdate) => {
-    const updatedBlog = await blogService.updateBlog(blogToUpdate);
-    const updatedBlogsState = blogs.map((blog) => {
-      if (blog.id === updatedBlog.id) {
-        const updated = updatedBlog;
-        return updated;
-      }
-      return blog;
-    });
-
-    setBlogs(updatedBlogsState);
+    // const updatedBlog = await blogService.updateBlog(blogToUpdate);
+    // const updatedBlogsState = blogs.map((blog) => {
+    //   if (blog.id === updatedBlog.id) {
+    //     const updated = updatedBlog;
+    //     return updated;
+    //   }
+    //   return blog;
+    // });
+    // setBlogs(updatedBlogsState);
   };
 
   const removeBlog = async (blogToRemove) => {
     // eslint-disable-next-line no-undef
-    const confirmation = window.confirm(`Delete ${blogToRemove.title}?`);
-    try {
-      if (confirmation) {
-        await blogService.removeBlog(blogToRemove.id);
-        const filteredBlogs = blogs.filter(
-          (blog) => blog.id !== blogToRemove.id,
-        );
-        setBlogs(filteredBlogs);
-        dispatch(setNotification("Deleted Succesfully", true));
-      }
-    } catch (e) {
-      const error = "Couldn't delete a blog";
-      dispatch(setNotification(error, false));
-    }
+    // const confirmation = window.confirm(`Delete ${blogToRemove.title}?`);
+    // try {
+    //   if (confirmation) {
+    //     await blogService.removeBlog(blogToRemove.id);
+    //     const filteredBlogs = blogs.filter(
+    //       (blog) => blog.id !== blogToRemove.id,
+    //     );
+    //     setBlogs(filteredBlogs);
+    //     dispatch(setNotification("Deleted Succesfully", true));
+    //   }
+    // } catch (e) {
+    //   const error = "Couldn't delete a blog";
+    //   dispatch(setNotification(error, false));
+    // }
   };
 
   if (!user)
@@ -124,9 +103,9 @@ function App() {
       {notification.status !== null && <Notification />}
       <UserInApp name={user.name} handleLogout={handleLogout} />
       <TogglableForm buttonLabel="Add new blog" ref={blogFormRef}>
-        <BlogForm saveNewBlog={saveNewBlog} />
+        <BlogForm blogFormRef={blogFormRef} />
       </TogglableForm>
-      {blogs
+      {[...blogs]
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
           <Blog
