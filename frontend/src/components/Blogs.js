@@ -1,12 +1,11 @@
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable react/button-has-type */
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
+import { useSelector } from "react-redux";
 
-function Blog({ blog, user }) {
+const Blog = ({ blog, user }) => {
   const [isHidden, setIsHidden] = useState(true);
   const toggleVisibility = () => setIsHidden(!isHidden);
   const blogCreatedBy = blog.user;
@@ -69,11 +68,20 @@ function Blog({ blog, user }) {
       </div>
     </div>
   );
-}
+};
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
 
-export default Blog;
+const Blogs = () => {
+  const blogs = useSelector((state) => state.blogs);
+  const user = useSelector((state) => state.user);
+
+  return [...blogs]
+    .sort((a, b) => b.likes - a.likes)
+    .map((blog) => <Blog key={blog.id} blog={blog} user={user} />);
+};
+
+export default Blogs;

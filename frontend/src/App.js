@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 import { useEffect, useRef } from "react";
-import Blog from "./components/Blog";
+import Blogs from "./components/Blogs";
 import blogService from "./services/blogs";
 import LoginForm from "./components/LogInForm";
 import UserInApp from "./components/UserInApp";
@@ -13,7 +13,6 @@ import { initBlogs } from "./reducers/blogReducer";
 import { login } from "./reducers/userReducer";
 
 function App() {
-  const blogs = useSelector((state) => state.blogs);
   const user = useSelector((state) => state.user);
   const notification = useSelector((state) => state.notification);
   const blogFormRef = useRef("");
@@ -49,11 +48,7 @@ function App() {
       <TogglableForm buttonLabel="Add new blog" ref={blogFormRef}>
         <BlogForm blogFormRef={blogFormRef} />
       </TogglableForm>
-      {[...blogs]
-        .sort((a, b) => b.likes - a.likes)
-        .map((blog) => (
-          <Blog key={blog.id} blog={blog} user={user} />
-        ))}
+      <Blogs />
     </div>
   );
 }
