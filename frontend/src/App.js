@@ -1,25 +1,29 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
-import { useEffect, useRef } from "react";
-import Blogs from "./components/Blogs";
+import { useEffect } from "react";
 import blogService from "./services/blogs";
 import LoginForm from "./components/LogInForm";
 import UserInApp from "./components/UserInApp";
-import BlogForm from "./components/BlogForm";
 import Notification from "./components/Notification";
-import TogglableForm from "./components/TogglableForm";
+import UsersView from "./views/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { initBlogs } from "./reducers/blogReducer";
 import { login } from "./reducers/userReducer";
+import { Routes, Route } from "react-router-dom";
+import IndividualUserView from "./views/IndividualUser";
+import { initUsers } from "./reducers/allUsersReducer";
+import BlogsView from "./views/Blogs";
+import IndividualBlogView from "./views/IndividualBlog";
+import Navigation from "./components/Navigation";
 
 function App() {
   const user = useSelector((state) => state.user);
   const notification = useSelector((state) => state.notification);
-  const blogFormRef = useRef("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(initBlogs());
+    dispatch(initUsers());
   }, []);
 
   useEffect(() => {
@@ -42,13 +46,23 @@ function App() {
 
   return (
     <div>
-      <h2>Blogs</h2>
-      {notification.status !== null && <Notification />}
-      <UserInApp name={user.name} />
-      <TogglableForm buttonLabel="Add new blog" ref={blogFormRef}>
-        <BlogForm blogFormRef={blogFormRef} />
-      </TogglableForm>
-      <Blogs />
+      <header>
+        <div>
+          <Navigation />
+          <UserInApp name={user.name} />
+        </div>
+
+        <h2>Blogs</h2>
+        {notification.status !== null && <Notification />}
+      </header>
+
+      <Routes>
+        <Route path="/users/:id" element={<IndividualUserView />} />
+        <Route path="/users" element={<UsersView />} />
+        <Route path="/blogs/:id" element={<IndividualBlogView />} />
+        <Route path="/" element={<BlogsView />} />
+      </Routes>
+      {/* <Blogs /> */}
     </div>
   );
 }

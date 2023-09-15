@@ -6,8 +6,8 @@ const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    login: (state, payload) => {
-      return payload.payload;
+    login: (state, action) => {
+      return action.payload;
     },
     logout: () => {
       return null;
