@@ -66,3 +66,10 @@ export const deleteBlog = (blogToRemove) => {
     return removedBlog;
   };
 };
+
+export const addComment = (blogToUpdate, comment) => {
+  return async (dispatch) => {
+    const updatedBlog = await blogService.addComment(blogToUpdate, comment);
+    dispatch(updateBlog(updatedBlog));
+  };
+};
