@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Likes from "../components/Likes";
 import DeleteBlog from "../components/DeleteBlog";
 import Url from "../components/Url";
+import Comments from "../components/Comments";
 
 const IndividualBlogView = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const IndividualBlogView = () => {
   if (!blogToView) {
     return null;
   }
+
   return (
     <div>
       <h2>
@@ -30,6 +32,7 @@ const IndividualBlogView = () => {
           : blogToView.user.name}
         <DeleteBlog blogToDelete={blogToView} />
       </div>
+      <Comments commentsOfBlog={blogToView.comments} />
     </div>
   );
 };
