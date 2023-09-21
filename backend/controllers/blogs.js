@@ -1,4 +1,5 @@
 const blogRouter = require("express").Router();
+const { request, response } = require("express");
 const Blog = require("../models/blog");
 const { userExtractor } = require("../utils/middleware");
 
@@ -73,6 +74,16 @@ blogRouter.put("/:id", async (request, response) => {
   } else {
     response.status(404).end();
   }
+});
+
+blogRouter.post("/:id/comments", async (request, response) => {
+  const { id } = request.params;
+  const commentToAdd = request.body.comment;
+  const blog = await Blog.findById(id);
+
+  blog.comments = [...blog.comments, commentToAdd];
+  blog.save();
+  response.status(201).send(blog).end();
 });
 
 module.exports = blogRouter;

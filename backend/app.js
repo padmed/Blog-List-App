@@ -9,7 +9,7 @@ const logger = require("./utils/logger");
 const blogRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
-const testingRouter = require('./controllers/test')
+const testingRouter = require("./controllers/testMode");
 const {
   errorHandler,
   requestLogger,
@@ -36,8 +36,8 @@ app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 
-if(process.env.NODE_ENV === 'test'){
-  app.use('/api/testing', testingRouter)
+if (process.env.NODE_ENV === "test") {
+  app.use("/api/testing", testingRouter);
 }
 
 app.use(unknownEndpoint);

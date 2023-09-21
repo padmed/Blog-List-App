@@ -182,6 +182,26 @@ describe("POST request tests", () => {
     const blogsAtEnd = await blogsInDb();
     expect(blogsAtEnd).toHaveLength(initialBlogs.length);
   });
+
+  describe("Comment tests", () => {
+    test("comments list is initialised in db", async () => {
+      const blogs = await blogsInDb();
+      const blog = blogs[0];
+      expect(blog).toHaveProperty("comments");
+    });
+
+    test("Adding comment", async () => {
+      const blogs = await blogsInDb();
+      const blogToUpdate = blogs[0].id;
+
+      const updatedComments = await api
+        .post(`/api/blogs/${blogToUpdate}/comments`)
+        .send({ comment: "hola" })
+        .expect(201);
+
+      expect(updatedComments.body.comments).toEqual(["hola"]);
+    });
+  });
 });
 
 describe("DELETE request tests", () => {
@@ -327,6 +347,7 @@ describe("PUT request tests", () => {
       author: "test",
       url: "test.com",
       likes: 0,
+      comments: [],
     };
 
     const updatedBlog = await api
