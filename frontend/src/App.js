@@ -15,6 +15,8 @@ import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/Blogs";
 import IndividualBlogView from "./views/IndividualBlog";
 import Navigation from "./components/Navigation";
+import Paper from "@mui/material/Paper";
+import { loginPageStyle, loginContainerStyle } from "./styles/loginPage";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -38,10 +40,12 @@ function App() {
 
   if (!user)
     return (
-      <>
+      <div style={loginPageStyle}>
         {notification.status === false && <Notification />}
-        <LoginForm />
-      </>
+        <Paper elevation={12} style={loginContainerStyle}>
+          <LoginForm />
+        </Paper>
+      </div>
     );
 
   return (
@@ -62,7 +66,6 @@ function App() {
         <Route path="/blogs/:id" element={<IndividualBlogView />} />
         <Route path="/" element={<BlogsView />} />
       </Routes>
-      {/* <Blogs /> */}
     </div>
   );
 }

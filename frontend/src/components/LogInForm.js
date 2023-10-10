@@ -2,6 +2,15 @@ import { useState } from "react";
 import { loginUser } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import {
+  headingStyle,
+  formStyle,
+  usernameInputStyle,
+  passwordInputStyle,
+  loginButtonStyle,
+} from "../styles/loginPage";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -23,28 +32,37 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1>Log in to application</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>username</label>
-          <input
-            id="usernameInput"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          ></input>
-        </div>
-        <div>
-          <label>password</label>
-          <input
-            id="passwordInput"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          ></input>
-        </div>
-        <button id="loginButton" type="submit">
-          log in
-        </button>
+      <div style={headingStyle}>
+        <h1>Log in</h1>
+      </div>
+      <form onSubmit={handleLogin} style={formStyle}>
+        <TextField
+          label="Username"
+          id="usernameInput"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+          style={usernameInputStyle}
+          color="primary"
+        ></TextField>
+        <TextField
+          label="Password"
+          id="passwordInput"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          style={passwordInputStyle}
+        ></TextField>
+        <Button
+          variant="contained"
+          id="loginButton"
+          type="submit"
+          style={loginButtonStyle}
+        >
+          LOG IN
+        </Button>
       </form>
+      <span style={{ marginTop: "20px" }}>
+        {"Don't have an account? Sign up"}{" "}
+      </span>
     </>
   );
 };

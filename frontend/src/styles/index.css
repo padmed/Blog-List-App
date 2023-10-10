@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabarito&display=swap');
+
+body {
+    font-family: 'Gabarito', sans-serif;
+    background-image: url('../assets/backgroundImage.jpg');
+    background-size: 700px 700px;
+}
