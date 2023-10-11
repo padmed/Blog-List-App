@@ -17,6 +17,7 @@ export const loginContainerStyle = {
   alignItems: "center",
   borderRadius: "10px",
   backgroundColor: colors.beige,
+  marginTop: "20px",
 };
 
 export const headingStyle = { width: "78%", marginTop: "40px" };

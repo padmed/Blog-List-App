@@ -20,7 +20,6 @@ import { loginPageStyle, loginContainerStyle } from "./styles/loginPage";
 
 function App() {
   const user = useSelector((state) => state.user);
-  const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,7 +40,7 @@ function App() {
   if (!user)
     return (
       <div style={loginPageStyle}>
-        {notification.status === false && <Notification />}
+        <Notification />
         <Paper elevation={12} style={loginContainerStyle}>
           <LoginForm />
         </Paper>
@@ -57,7 +56,7 @@ function App() {
         </div>
 
         <h2>Blogs</h2>
-        {notification.status !== null && <Notification />}
+        <Notification />
       </header>
 
       <Routes>
