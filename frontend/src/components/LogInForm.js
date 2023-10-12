@@ -11,6 +11,7 @@ import {
   passwordInputStyle,
   loginButtonStyle,
 } from "../styles/loginPage";
+import Trademark from "./Trademark";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -63,6 +64,7 @@ const LoginForm = () => {
       <span style={{ marginTop: "20px" }}>
         {"Don't have an account? Sign up"}{" "}
       </span>
+      <Trademark />
     </>
   );
 };
