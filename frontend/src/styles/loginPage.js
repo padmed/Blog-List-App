@@ -10,7 +10,7 @@ export const loginPageStyle = {
 };
 
 export const loginContainerStyle = {
-  height: "550px",
+  height: "580px",
   width: "50%",
   display: "flex",
   flexDirection: "column",
