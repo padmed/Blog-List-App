@@ -2,7 +2,7 @@ import { useState } from "react";
 import { loginUser } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
-import { TextField } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
   headingStyle,
@@ -12,6 +12,9 @@ import {
   loginButtonStyle,
 } from "../styles/loginPage";
 import Trademark from "./Trademark";
+import { Link } from "react-router-dom";
+import { colors } from "../styles/theme";
+import { loginContainerStyle } from "../styles/loginPage";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -32,7 +35,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <Paper elevation={12} style={loginContainerStyle}>
       <div style={headingStyle}>
         <h1>Log in</h1>
       </div>
@@ -62,10 +65,16 @@ const LoginForm = () => {
         </Button>
       </form>
       <span style={{ marginTop: "20px" }}>
-        {"Don't have an account? Sign up"}{" "}
+        {"Don't have an account? "}{" "}
+        <Link
+          style={{ color: colors.orange, textDecoration: "none" }}
+          to={"/signup"}
+        >
+          Sign up
+        </Link>
       </span>
       <Trademark />
-    </>
+    </Paper>
   );
 };
 

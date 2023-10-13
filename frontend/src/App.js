@@ -15,8 +15,7 @@ import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/Blogs";
 import IndividualBlogView from "./views/IndividualBlog";
 import Navigation from "./components/Navigation";
-import Paper from "@mui/material/Paper";
-import { loginPageStyle, loginContainerStyle } from "./styles/loginPage";
+import { loginPageStyle } from "./styles/loginPage";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -41,9 +40,9 @@ function App() {
     return (
       <div style={loginPageStyle}>
         <Notification />
-        <Paper elevation={12} style={loginContainerStyle}>
-          <LoginForm />
-        </Paper>
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+        </Routes>
       </div>
     );
 
