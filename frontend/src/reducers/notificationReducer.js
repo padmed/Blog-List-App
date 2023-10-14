@@ -22,10 +22,12 @@ export default notificationSlice.reducer;
 export const { writeNotification, hideNotification } =
   notificationSlice.actions;
 
+let timeoutId;
 export const setNotification = (message, status) => {
   return (dispatch) => {
+    clearTimeout(timeoutId);
     dispatch(writeNotification({ message, status }));
-    setTimeout(() => {
+    timeoutId = setTimeout(() => {
       dispatch(hideNotification());
     }, 1500);
   };
