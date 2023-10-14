@@ -9,12 +9,12 @@ import {
   formStyle,
   usernameInputStyle,
   passwordInputStyle,
-  loginButtonStyle,
-} from "../styles/loginPage";
+  formButtonStyle,
+} from "../styles/styles";
 import Trademark from "./Trademark";
 import { Link } from "react-router-dom";
 import { colors } from "../styles/theme";
-import { loginContainerStyle } from "../styles/loginPage";
+import { loginContainerStyle } from "../styles/styles";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -59,7 +59,7 @@ const LoginForm = () => {
           variant="contained"
           id="loginButton"
           type="submit"
-          style={loginButtonStyle}
+          style={formButtonStyle}
         >
           LOG IN
         </Button>
