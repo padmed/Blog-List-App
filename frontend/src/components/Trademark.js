@@ -1,21 +1,13 @@
 import CopyrightIcon from "@mui/icons-material/Copyright";
+import { copyrightStyle, appNameStyle } from "../styles/styles";
 
 const Trademark = () => {
   return (
     <>
-      <span className="appName" style={{ marginTop: "35px" }}>
+      <span className="appName" style={appNameStyle}>
         BlogBinder
       </span>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "rgba(0,0,0,0.5)",
-          fontSize: "15px",
-          marginTop: "5px",
-        }}
-      >
+      <div style={copyrightStyle}>
         <CopyrightIcon sx={{ fontSize: "15px" }} /> {"  "}2023 BlogBinder
       </div>
     </>

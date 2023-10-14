@@ -32,11 +32,29 @@ export const formStyle = {
 
 export const usernameInputStyle = { marginTop: "20px" };
 export const passwordInputStyle = { marginTop: "40px" };
+export const inputStyle = { marginTop: "30px" };
 
 export const formButtonStyle = {
-  marginTop: "60px",
+  marginTop: "50px",
   height: "60px",
   borderRadius: "10px",
   backgroundColor: colors.black,
   color: colors.beige,
 };
+
+export const signRedirectStyle = {
+  marginTop: "20px",
+};
+
+export const linkStyle = { color: colors.orange, textDecoration: "none" };
+
+export const copyrightStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "rgba(0,0,0,0.5)",
+  fontSize: "15px",
+  marginTop: "5px",
+};
+
+export const appNameStyle = { marginTop: "35px" };
