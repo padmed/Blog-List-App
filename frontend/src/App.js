@@ -15,7 +15,8 @@ import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/Blogs";
 import IndividualBlogView from "./views/IndividualBlog";
 import Navigation from "./components/Navigation";
-import { loginPageStyle } from "./styles/loginPage";
+import { loginPageStyle } from "./styles/styles";
+import SignUpForm from "./components/SignUpForm";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -42,6 +43,7 @@ function App() {
         <Notification />
         <Routes>
           <Route path="/" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUpForm />} />
         </Routes>
       </div>
     );
