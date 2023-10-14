@@ -29,6 +29,6 @@ export const setNotification = (message, status) => {
     dispatch(writeNotification({ message, status }));
     timeoutId = setTimeout(() => {
       dispatch(hideNotification());
-    }, 1500);
+    }, 3000);
   };
 };

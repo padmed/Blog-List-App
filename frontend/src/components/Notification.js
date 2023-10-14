@@ -12,10 +12,7 @@ const Notification = () => {
   const type = notification.status ? "success" : "error";
 
   return (
-    <Snackbar
-      open={notification.status || notification.status === false}
-      autoHideDuration={6000}
-    >
+    <Snackbar open={notification.status || notification.status === false}>
       <Alert severity={type} sx={{ width: "100%" }}>
         {notification.message}
       </Alert>
