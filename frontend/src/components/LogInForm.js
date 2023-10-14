@@ -4,21 +4,24 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
 import { Paper, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
+import Trademark from "./Trademark";
+import { Link } from "react-router-dom";
+import { loginContainerStyle } from "../styles/styles";
 import {
   headingStyle,
   formStyle,
   usernameInputStyle,
   passwordInputStyle,
   formButtonStyle,
+  signRedirectStyle,
+  linkStyle,
 } from "../styles/styles";
-import Trademark from "./Trademark";
-import { Link } from "react-router-dom";
-import { colors } from "../styles/theme";
-import { loginContainerStyle } from "../styles/styles";
+import usePasswordVisibility from "../hooks/usePasswordVisibility";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const passwordVisibility = usePasswordVisibility();
   const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
@@ -50,10 +53,14 @@ const LoginForm = () => {
         ></TextField>
         <TextField
           label="Password"
+          type={passwordVisibility.visibility ? "text" : "password"}
           id="passwordInput"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           style={passwordInputStyle}
+          InputProps={{
+            endAdornment: passwordVisibility.component,
+          }}
         ></TextField>
         <Button
           variant="contained"
@@ -64,12 +71,9 @@ const LoginForm = () => {
           LOG IN
         </Button>
       </form>
-      <span style={{ marginTop: "20px" }}>
+      <span style={signRedirectStyle}>
         {"Don't have an account? "}{" "}
-        <Link
-          style={{ color: colors.orange, textDecoration: "none" }}
-          to={"/signup"}
-        >
+        <Link style={linkStyle} to={"/signup"}>
           Sign up
         </Link>
       </span>
@@ -77,7 +81,5 @@ const LoginForm = () => {
     </Paper>
   );
 };
-
-LoginForm.propTypes = {};
 
 export default LoginForm;
