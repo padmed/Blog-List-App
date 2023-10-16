@@ -1,8 +1,8 @@
-import { InputAdornment } from "@mui/material";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
+import { colors } from "../styles/theme";
 
 const usePasswordVisibility = () => {
   const [visibility, setVisibility] = useState(false);
@@ -10,15 +10,16 @@ const usePasswordVisibility = () => {
   return {
     visibility,
     component: (
-      <InputAdornment position="end">
+      <>
         <IconButton
+          style={{ color: colors.orangeLight }}
           onClick={() => {
             setVisibility(!visibility);
           }}
         >
           {visibility ? <VisibilityIcon /> : <VisibilityOffIcon />}
         </IconButton>
-      </InputAdornment>
+      </>
     ),
   };
 };
