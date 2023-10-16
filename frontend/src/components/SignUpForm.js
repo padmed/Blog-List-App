@@ -13,8 +13,12 @@ import {
 import Trademark from "./Trademark";
 import useField from "../hooks/useField";
 import { useEffect, useState } from "react";
-import PasswordMissmatch from "./PasswordMismatch";
 import PasswordField from "./PasswordField";
+import userServices from "../services/users";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../reducers/notificationReducer";
+import InputAdornment from "@mui/material/InputAdornment";
+import ValidationInfo from "./ValidationInfo";
 
 const SignUpForm = () => {
   const name = useField("text");
@@ -22,6 +26,7 @@ const SignUpForm = () => {
   const password = useField("password");
   const repeatPassword = useField("password");
   const [inputError, setInputError] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (repeatPassword.value !== "") {
@@ -35,8 +40,19 @@ const SignUpForm = () => {
     }
   }, [repeatPassword.value]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      await userServices.addUser({
+        username: username.value,
+        name: name.value,
+        password: password.value,
+      });
+      dispatch(setNotification("User successfully registered", true));
+    } catch (error) {
+      dispatch(setNotification(error.response.data.errorMessage, false));
+    }
   };
 
   return (
@@ -56,6 +72,13 @@ const SignUpForm = () => {
           label="Username"
           style={inputStyle}
           autoComplete="username"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <ValidationInfo inputValue={username.value} />
+              </InputAdornment>
+            ),
+          }}
         ></TextField>
         <PasswordField
           fieldProps={password}
@@ -66,10 +89,6 @@ const SignUpForm = () => {
           fieldProps={repeatPassword}
           label="Repeat Password"
           inputError={inputError}
-        />
-        <PasswordMissmatch
-          password={password.value}
-          repeatPassword={repeatPassword.value}
         />
         <Button variant="contained" type="submit" style={signupFormButtonStyle}>
           Sign Up
