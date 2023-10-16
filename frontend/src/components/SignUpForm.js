@@ -5,7 +5,7 @@ import {
   signupContainerStyle,
   usernameInputStyle,
   formStyle,
-  formButtonStyle,
+  signupFormButtonStyle,
   inputStyle,
   signRedirectStyle,
   linkStyle,
@@ -14,22 +14,25 @@ import Trademark from "./Trademark";
 import useField from "../hooks/useField";
 import { useEffect, useState } from "react";
 import usePasswordVisibility from "../hooks/usePasswordVisibility";
+import PasswordMissmatch from "./PasswordMismatch";
 
 const SignUpForm = () => {
   const name = useField("text");
   const username = useField("text");
   const password = useField("password");
   const repeatPassword = useField("password");
-  const [inputColor, setInputColor] = useState("primary");
+  const [inputError, setInputError] = useState(false);
   const passwordVisibility = usePasswordVisibility();
 
   useEffect(() => {
     if (repeatPassword.value !== "") {
       if (password.value === repeatPassword.value) {
-        setInputColor("success");
+        setInputError(false);
       } else {
-        setInputColor("error");
+        setInputError(true);
       }
+    } else {
+      setInputError(false);
     }
   }, [repeatPassword.value]);
 
@@ -66,19 +69,24 @@ const SignUpForm = () => {
           InputProps={{
             endAdornment: passwordVisibility.component,
           }}
+          error={inputError}
         ></TextField>
         <TextField
           {...repeatPassword}
           type={passwordVisibility.visibility ? "text" : "password"}
           label="Repeat Password"
           style={inputStyle}
-          color={inputColor}
           autoComplete="new-password"
           InputProps={{
             endAdornment: passwordVisibility.component,
           }}
+          error={inputError}
         ></TextField>
-        <Button variant="contained" type="submit" style={formButtonStyle}>
+        <PasswordMissmatch
+          password={password.value}
+          repeatPassword={repeatPassword.value}
+        />
+        <Button variant="contained" type="submit" style={signupFormButtonStyle}>
           Sign Up
         </Button>
       </form>

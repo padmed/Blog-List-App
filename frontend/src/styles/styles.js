@@ -42,6 +42,8 @@ export const formButtonStyle = {
   color: colors.beige,
 };
 
+export const signupFormButtonStyle = { ...formButtonStyle, marginTop: "35px" };
+
 export const signRedirectStyle = {
   marginTop: "20px",
 };
@@ -58,3 +60,11 @@ export const copyrightStyle = {
 };
 
 export const appNameStyle = { marginTop: "35px" };
+
+export const wrongPasswordStyle = {
+  height: "20px",
+  marginTop: "5px",
+  color: colors.red,
+  marginLeft: "5px",
+  fontSize: "15px",
+};
