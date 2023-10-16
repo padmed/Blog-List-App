@@ -11,4 +11,9 @@ const getUsers = async () => {
   return response.data;
 };
 
-export default { findUser, getUsers };
+const addUser = async (credentials) => {
+  const response = await axios.post(baseUrl, credentials);
+  return response.data;
+};
+
+export default { findUser, getUsers, addUser };
