@@ -13,8 +13,8 @@ import {
 import Trademark from "./Trademark";
 import useField from "../hooks/useField";
 import { useEffect, useState } from "react";
-import usePasswordVisibility from "../hooks/usePasswordVisibility";
 import PasswordMissmatch from "./PasswordMismatch";
+import PasswordField from "./PasswordField";
 
 const SignUpForm = () => {
   const name = useField("text");
@@ -22,7 +22,6 @@ const SignUpForm = () => {
   const password = useField("password");
   const repeatPassword = useField("password");
   const [inputError, setInputError] = useState(false);
-  const passwordVisibility = usePasswordVisibility();
 
   useEffect(() => {
     if (repeatPassword.value !== "") {
@@ -56,32 +55,18 @@ const SignUpForm = () => {
           {...username}
           label="Username"
           style={inputStyle}
-          color="primary"
           autoComplete="username"
         ></TextField>
-        <TextField
-          {...password}
-          type={passwordVisibility.visibility ? "text" : "password"}
-          label="Password"
-          style={inputStyle}
-          color="primary"
-          autoComplete="new-password"
-          InputProps={{
-            endAdornment: passwordVisibility.component,
-          }}
-          error={inputError}
-        ></TextField>
-        <TextField
-          {...repeatPassword}
-          type={passwordVisibility.visibility ? "text" : "password"}
+        <PasswordField
+          fieldProps={password}
+          label={"Password"}
+          inputError={inputError}
+        />
+        <PasswordField
+          fieldProps={repeatPassword}
           label="Repeat Password"
-          style={inputStyle}
-          autoComplete="new-password"
-          InputProps={{
-            endAdornment: passwordVisibility.component,
-          }}
-          error={inputError}
-        ></TextField>
+          inputError={inputError}
+        />
         <PasswordMissmatch
           password={password.value}
           repeatPassword={repeatPassword.value}
