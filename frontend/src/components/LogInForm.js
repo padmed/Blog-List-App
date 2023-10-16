@@ -50,6 +50,7 @@ const LoginForm = () => {
           value={username}
           style={usernameInputStyle}
           color="primary"
+          autoComplete="username"
         ></TextField>
         <TextField
           label="Password"
@@ -61,6 +62,7 @@ const LoginForm = () => {
           InputProps={{
             endAdornment: passwordVisibility.component,
           }}
+          autoComplete="current-password"
         ></TextField>
         <Button
           variant="contained"
