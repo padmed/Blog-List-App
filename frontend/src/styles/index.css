@@ -12,3 +12,10 @@ body {
     font-size: 30px;
     font-weight: 700;
 }
+
+.link {
+    color: black;
+}
+.link:hover {
+    color: rgb(249, 123, 34);
+}

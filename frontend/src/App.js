@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import blogService from "./services/blogs";
 import LoginForm from "./components/LogInForm";
-import UserInApp from "./components/UserInApp";
 import Notification from "./components/Notification";
 import UsersView from "./views/Users";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +13,9 @@ import IndividualUserView from "./views/IndividualUser";
 import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/Blogs";
 import IndividualBlogView from "./views/IndividualBlog";
-import Navigation from "./components/Navigation";
 import { loginPageStyle } from "./styles/styles";
 import SignUpForm from "./components/SignUpForm";
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -53,8 +52,7 @@ function App() {
     <div>
       <header>
         <div>
-          <Navigation />
-          <UserInApp name={user.name} />
+          <NavigationBar />
         </div>
 
         <h2>Blogs</h2>
