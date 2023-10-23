@@ -16,10 +16,13 @@ import IndividualBlogView from "./views/IndividualBlog";
 import { loginPageStyle } from "./styles/styles";
 import SignUpForm from "./components/SignUpForm";
 import NavigationBar from "./components/NavigationBar";
+import useIsMobile from "./hooks/useIsMobile";
+import BottomNavigationBar from "./components/BottomNavigationBar";
 
 function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     dispatch(initBlogs());
@@ -65,6 +68,7 @@ function App() {
         <Route path="/blogs/:id" element={<IndividualBlogView />} />
         <Route path="/" element={<BlogsView />} />
       </Routes>
+      <footer>{isMobile && <BottomNavigationBar />}</footer>
     </div>
   );
 }
