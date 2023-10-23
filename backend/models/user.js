@@ -27,6 +27,8 @@ userSchema.set("toJSON", {
   },
 });
 
+uniqueValidator.defaults.message = 'already exists'
+
 userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model("User", userSchema);
