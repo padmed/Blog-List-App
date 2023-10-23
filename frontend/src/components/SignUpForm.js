@@ -1,4 +1,4 @@
-import { Paper, TextField, Button } from "@mui/material";
+import { Paper, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import {
   headingStyle,
@@ -6,19 +6,17 @@ import {
   usernameInputStyle,
   formStyle,
   signupFormButtonStyle,
-  inputStyle,
   signRedirectStyle,
   linkStyle,
 } from "../styles/styles";
 import Trademark from "./Trademark";
 import useField from "../hooks/useField";
 import { useEffect, useState } from "react";
-import PasswordField from "./PasswordField";
 import userServices from "../services/users";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
-import InputAdornment from "@mui/material/InputAdornment";
-import ValidationInfo from "./ValidationInfo";
+
+import ValidatedTextField from "./ValidatedTextField";
 
 const SignUpForm = () => {
   const name = useField("text");
@@ -43,26 +41,43 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.value.length < 3) {
-      dispatch(
-        setNotification("Username must be at least 3 characters long", false),
-      );
+
+    const isInvalidLength = (value, minLength, fieldName) => {
+      if (value.length < minLength) {
+        dispatch(
+          setNotification(
+            `${fieldName} must be at least ${minLength} characters long`,
+            false,
+          ),
+        );
+        return true;
+      }
+      return false;
+    };
+
+    const { value: nameValue } = name;
+    const { value: usernameValue } = username;
+    const { value: passwordValue } = password;
+    const { value: repeatPasswordValue } = repeatPassword;
+
+    if (
+      isInvalidLength(nameValue, 3, "Name") ||
+      isInvalidLength(usernameValue, 3, "Username") ||
+      isInvalidLength(passwordValue, 3, "Password")
+    ) {
       return;
-    } else if (password.value.length < 3) {
-      dispatch(
-        setNotification("Password must be at least 3 characters long", false),
-      );
-      return;
-    } else if (password.value !== repeatPassword.value) {
+    }
+
+    if (passwordValue !== repeatPasswordValue) {
       dispatch(setNotification("Passwords do not match", false));
       return;
     }
 
     try {
       await userServices.addUser({
-        username: username.value,
-        name: name.value,
-        password: password.value,
+        username: usernameValue,
+        name: nameValue,
+        password: passwordValue,
       });
       dispatch(
         setNotification(
@@ -72,7 +87,10 @@ const SignUpForm = () => {
       );
       navigate("/");
     } catch (error) {
-      dispatch(setNotification(error.response.data.errorMessage, false));
+      const errorMessage = error.response
+        ? error.response.data.errorMessage
+        : "An error occurred while registering the user.";
+      dispatch(setNotification(errorMessage, false));
     }
   };
 
@@ -82,31 +100,22 @@ const SignUpForm = () => {
         <h1>Sign Up</h1>
       </div>
       <form style={formStyle} onSubmit={handleSubmit}>
-        <TextField
-          {...name}
+        <ValidatedTextField
+          fieldProps={name}
           label="Name"
           style={usernameInputStyle}
-          color="primary"
-        ></TextField>
-        <TextField
-          {...username}
+        />
+        <ValidatedTextField
+          fieldProps={username}
           label="Username"
-          style={inputStyle}
           autoComplete="username"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <ValidationInfo inputValue={username.value} />
-              </InputAdornment>
-            ),
-          }}
-        ></TextField>
-        <PasswordField
+        />
+        <ValidatedTextField
           fieldProps={password}
           label={"Password"}
           inputError={inputError}
         />
-        <PasswordField
+        <ValidatedTextField
           fieldProps={repeatPassword}
           label="Repeat Password"
           inputError={inputError}
