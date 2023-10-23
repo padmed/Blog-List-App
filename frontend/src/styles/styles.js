@@ -69,3 +69,32 @@ export const wrongPasswordStyle = {
   marginLeft: "5px",
   fontSize: "15px",
 };
+
+export const navigationContainerStyle = {
+  height: "60px",
+  width: "100%",
+  backgroundColor: colors.beige,
+  position: "fixed",
+  top: 0,
+  left: 0,
+  justifyContent: "center",
+};
+
+export const appNameMobileNavStyle = { justifyContent: "center" };
+
+export const appNameNavStyle = { marginLeft: "40px" };
+
+export const firstNavLinkStyle = {
+  padding: "20px",
+  marginLeft: "50px",
+  textDecoration: "none",
+};
+
+export const navLinkStyle = { padding: "20px", textDecoration: "none" };
+
+export const logoutButtonStyle = {
+  backgroundColor: colors.black,
+  color: colors.beige,
+  fontSize: "12px",
+  textTransform: "none",
+};
