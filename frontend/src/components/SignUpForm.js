@@ -1,5 +1,5 @@
 import { Paper, TextField, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   headingStyle,
   signupContainerStyle,
@@ -27,6 +27,7 @@ const SignUpForm = () => {
   const repeatPassword = useField("password");
   const [inputError, setInputError] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (repeatPassword.value !== "") {
@@ -42,6 +43,20 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (username.value.length < 3) {
+      dispatch(
+        setNotification("Username must be at least 3 characters long", false),
+      );
+      return;
+    } else if (password.value.length < 3) {
+      dispatch(
+        setNotification("Password must be at least 3 characters long", false),
+      );
+      return;
+    } else if (password.value !== repeatPassword.value) {
+      dispatch(setNotification("Passwords do not match", false));
+      return;
+    }
 
     try {
       await userServices.addUser({
@@ -49,7 +64,13 @@ const SignUpForm = () => {
         name: name.value,
         password: password.value,
       });
-      dispatch(setNotification("User successfully registered", true));
+      dispatch(
+        setNotification(
+          "User successfully registered, log in to continue",
+          true,
+        ),
+      );
+      navigate("/");
     } catch (error) {
       dispatch(setNotification(error.response.data.errorMessage, false));
     }
