@@ -9,7 +9,7 @@ import UsersView from "./views/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { initBlogs } from "./reducers/blogReducer";
 import { login } from "./reducers/userReducer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import IndividualUserView from "./views/IndividualUser";
 import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/Blogs";
@@ -44,6 +44,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="*" element={<Navigate to={"/"} />} />
         </Routes>
       </div>
     );
