@@ -13,6 +13,7 @@ import {
   navLinkStyle,
   logoutButtonStyle,
 } from "../styles/styles";
+import MobileNavMenu from "./MobileNavMenu";
 
 const NavigationBar = () => {
   const user = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ const NavigationBar = () => {
         <Toolbar sx={appNameMobileNavStyle}>
           <span className="appName">BlogBinder</span>
         </Toolbar>
+        <MobileNavMenu handleLogout={handleLogout} user={user} />
       </AppBar>
     );
   }
