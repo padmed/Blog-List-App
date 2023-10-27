@@ -4,14 +4,21 @@ import GroupIcon from "@mui/icons-material/Group";
 import { colors } from "../styles/theme";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import usePath from "../hooks/usePath";
 
 const BottomNavigationBar = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
+  const [click, setClick] = useState(false);
+  const path = usePath();
 
   useEffect(() => {
-    page === 0 ? navigate("/") : navigate("/users");
-  }, [page]);
+    if ((path !== "/" && page === 0) || page === 0) {
+      navigate("/");
+    } else if (page === 1) {
+      navigate("/users");
+    }
+  }, [click]);
 
   return (
     <div
@@ -25,12 +32,18 @@ const BottomNavigationBar = () => {
       <Paper elevation={12}>
         <BottomNavigation showLabels sx={{ backgroundColor: colors.beige }}>
           <BottomNavigationAction
-            onClick={() => setPage(0)}
+            onClick={() => {
+              setPage(0);
+              setClick(!click);
+            }}
             label="Blogs"
             icon={<TextSnippetIcon />}
           />
           <BottomNavigationAction
-            onClick={() => setPage(1)}
+            onClick={() => {
+              setClick(!click);
+              setPage(1);
+            }}
             label="Users"
             icon={<GroupIcon />}
           />
