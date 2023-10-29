@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { saveNewBlog } from "../reducers/blogReducer";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
+import useIsMobile from "../hooks/useIsMobile";
 
 const BlogForm = ({ blogFormRef }) => {
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const [newBlog, setNewBlog] = useState({
     title: "",
@@ -66,9 +68,13 @@ const BlogForm = ({ blogFormRef }) => {
             value={newBlog.url}
           ></input>
         </div>
-        <button id="createBlogButton" type="submit">
-          Create
-        </button>
+        {isMobile ? (
+          blogFormRef.current.submitButton
+        ) : (
+          <button id="createBlogButton" type="submit">
+            Create
+          </button>
+        )}
       </form>
     </div>
   );

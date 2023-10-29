@@ -98,3 +98,13 @@ export const logoutButtonStyle = {
   fontSize: "12px",
   textTransform: "none",
 };
+
+export const roundButtonStyle = {
+  padding: "15px",
+  width: "60px",
+  height: "60px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "100%",
+};
