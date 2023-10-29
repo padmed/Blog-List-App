@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Users = () => {
+const UsersView = () => {
   const users = useSelector((state) => state.allUsers);
 
   return (
@@ -29,4 +29,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UsersView;
