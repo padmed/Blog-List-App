@@ -1,4 +1,3 @@
-import TogglableForm from "../components/TogglableForm";
 import BlogForm from "../components/BlogForm";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
@@ -18,9 +17,7 @@ const BlogsView = () => {
 
   return (
     <>
-      <TogglableForm buttonLabel="Add new blog" ref={blogFormRef}>
-        <BlogForm blogFormRef={blogFormRef} />
-      </TogglableForm>
+      <BlogForm blogFormRef={blogFormRef} />
       {blogs.map((blog) => (
         <div style={blogStyle} key={blog.id}>
           <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>

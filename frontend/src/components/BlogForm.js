@@ -1,25 +1,30 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { saveNewBlog } from "../reducers/blogReducer";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
 import useIsMobile from "../hooks/useIsMobile";
+import { formStyle } from "../styles/styles";
+import { Paper, TextField } from "@mui/material";
+import { colors } from "../styles/theme";
+import { AddButton, SubmitButton, CancelButton } from "./ButtonComponents";
 
-const BlogForm = ({ blogFormRef }) => {
+const BlogForm = () => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
+  const [formVisibility, setFormVisibility] = useState(false);
   const [newBlog, setNewBlog] = useState({
     title: "",
     author: "",
     url: "",
   });
 
-  const handleBlogInputChange = (event) => {
-    const propertyToChange = event.target.id;
-    const valueToChange = event.target.value;
+  const toggleVisibility = () => setFormVisibility(!formVisibility);
 
-    if (propertyToChange in newBlog) {
-      setNewBlog({ ...newBlog, [propertyToChange]: valueToChange });
+  const handleBlogInputChange = ({ target }) => {
+    const { id, value } = target;
+
+    if (id in newBlog) {
+      setNewBlog({ ...newBlog, [id]: value });
     }
   };
 
@@ -34,54 +39,67 @@ const BlogForm = ({ blogFormRef }) => {
         url: "",
       });
       dispatch(setNotification(`A new blog "${newBlog.title}" added`, true));
-      blogFormRef.current.toggleVisibility();
+      toggleVisibility();
     } catch (error) {
       dispatch(setNotification(error.response.data.errorMessage, false));
     }
   };
 
+  if (!formVisibility) {
+    return <AddButton isMobile={isMobile} handleClick={toggleVisibility} />;
+  }
+
   return (
-    <div>
+    <Paper
+      elevation={6}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: colors.beige,
+        height: "400px",
+        borderRadius: "10px",
+      }}
+    >
       <h3>Create new</h3>
-      <form onSubmit={handleCreateBlog}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            id="title"
-            onChange={handleBlogInputChange}
-            value={newBlog.title}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="author">Author</label>
-          <input
-            id="author"
-            onChange={handleBlogInputChange}
-            value={newBlog.author}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="url">Url</label>
-          <input
-            id="url"
-            onChange={handleBlogInputChange}
-            value={newBlog.url}
-          ></input>
-        </div>
+      <form onSubmit={handleCreateBlog} style={formStyle}>
+        <TextField
+          label="Title"
+          onChange={handleBlogInputChange}
+          value={newBlog.title}
+          id="title"
+          variant="outlined"
+        />
+        <TextField
+          label="Author"
+          onChange={handleBlogInputChange}
+          value={newBlog.author}
+          id="author"
+          variant="outlined"
+        />
+        <TextField
+          label="Url"
+          onChange={handleBlogInputChange}
+          value={newBlog.url}
+          id="url"
+          variant="outlined"
+        />
         {isMobile ? (
-          blogFormRef.current.submitButton
+          <>
+            <CancelButton isMobile={isMobile} handleClick={toggleVisibility} />
+            <SubmitButton isMobile={isMobile} />
+          </>
         ) : (
-          <button id="createBlogButton" type="submit">
-            Create
-          </button>
+          <>
+            <SubmitButton isMobile={isMobile} />
+            <CancelButton isMobile={isMobile} handleClick={toggleVisibility} />
+          </>
         )}
       </form>
-    </div>
+    </Paper>
   );
-};
-
-BlogForm.propTypes = {
-  blogFormRef: PropTypes.object.isRequired,
 };
 
 export default BlogForm;

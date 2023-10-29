@@ -38,7 +38,7 @@ const ButtonRoundMobile = ({ type = "add", position, handleClick }) => {
         ...position,
         ...roundButtonStyle,
       }}
-      type="submit"
+      type={type === "submit" ? "submit" : "button"}
     >
       {icon}
     </IconButton>
@@ -48,6 +48,6 @@ const ButtonRoundMobile = ({ type = "add", position, handleClick }) => {
 ButtonRoundMobile.propTypes = {
   type: PropTypes.string.isRequired,
   position: PropTypes.object.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };
 export default ButtonRoundMobile;
