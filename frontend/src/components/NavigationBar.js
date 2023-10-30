@@ -5,15 +5,20 @@ import { logoutUser } from "../reducers/userReducer";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import useIsMobile from "../hooks/useIsMobile";
+import MobileNavMenu from "./MobileNavMenu";
 import {
   navigationContainerStyle,
-  appNameMobileNavStyle,
-  appNameNavStyle,
   firstNavLinkStyle,
   navLinkStyle,
   logoutButtonStyle,
 } from "../styles/styles";
-import MobileNavMenu from "./MobileNavMenu";
+import {
+  appNameMobileNavLayout,
+  appNameNavLayout,
+  navigationContainerLayout,
+  firstNavLinkLayout,
+  navLinkLayout,
+} from "../styles/layoutStyles";
 
 const NavigationBar = () => {
   const user = useSelector((state) => state.user);
@@ -26,8 +31,11 @@ const NavigationBar = () => {
 
   if (isMobile) {
     return (
-      <AppBar position="static" sx={navigationContainerStyle}>
-        <Toolbar sx={appNameMobileNavStyle}>
+      <AppBar
+        position="static"
+        sx={{ ...navigationContainerStyle, ...navigationContainerLayout }}
+      >
+        <Toolbar sx={appNameMobileNavLayout}>
           <span className="appName">BlogBinder</span>
         </Toolbar>
         <MobileNavMenu handleLogout={handleLogout} user={user} />
@@ -36,16 +44,27 @@ const NavigationBar = () => {
   }
 
   return (
-    <AppBar position="static" sx={navigationContainerStyle}>
+    <AppBar
+      position="static"
+      sx={{ ...navigationContainerStyle, ...navigationContainerLayout }}
+    >
       <Toolbar>
-        <span className="appName" style={appNameNavStyle}>
+        <span className="appName" style={appNameNavLayout}>
           BlogBinder
         </span>
         <Typography sx={{ flexGrow: 1 }}>
-          <Link to={"/"} className="link" style={firstNavLinkStyle}>
+          <Link
+            to={"/"}
+            className="link"
+            style={{ ...firstNavLinkStyle, ...firstNavLinkLayout }}
+          >
             Blogs
           </Link>
-          <Link to={"/users"} className="link" style={navLinkStyle}>
+          <Link
+            to={"/users"}
+            className="link"
+            style={{ ...navLinkStyle, ...navLinkLayout }}
+          >
             Users
           </Link>
         </Typography>

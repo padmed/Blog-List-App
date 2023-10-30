@@ -3,11 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   headingStyle,
   signupContainerStyle,
-  usernameInputStyle,
   formStyle,
-  signupFormButtonStyle,
-  signRedirectStyle,
   linkStyle,
+  formButtonStyle,
 } from "../styles/styles";
 import Trademark from "./Trademark";
 import useField from "../hooks/useField";
@@ -15,8 +13,14 @@ import { useEffect, useState } from "react";
 import userServices from "../services/users";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
-
 import ValidatedTextField from "./ValidatedTextField";
+import {
+  usernameInputLayout,
+  loginPageLayout,
+  formLayout,
+  signupFormButtonLayout,
+  signRedirectLayout,
+} from "../styles/layoutStyles";
 
 const SignUpForm = () => {
   const name = useField("text");
@@ -95,15 +99,18 @@ const SignUpForm = () => {
   };
 
   return (
-    <Paper elevation={12} style={signupContainerStyle}>
+    <Paper
+      elevation={12}
+      style={{ ...signupContainerStyle, ...loginPageLayout }}
+    >
       <div style={headingStyle}>
         <h1>Sign Up</h1>
       </div>
-      <form style={formStyle} onSubmit={handleSubmit}>
+      <form style={{ ...formStyle, ...formLayout }} onSubmit={handleSubmit}>
         <ValidatedTextField
           fieldProps={name}
           label="Name"
-          style={usernameInputStyle}
+          style={usernameInputLayout}
         />
         <ValidatedTextField
           fieldProps={username}
@@ -120,11 +127,15 @@ const SignUpForm = () => {
           label="Repeat Password"
           inputError={inputError}
         />
-        <Button variant="contained" type="submit" style={signupFormButtonStyle}>
+        <Button
+          variant="contained"
+          type="submit"
+          style={{ ...formButtonStyle, ...signupFormButtonLayout }}
+        >
           Sign Up
         </Button>
       </form>
-      <span style={signRedirectStyle}>
+      <span style={signRedirectLayout}>
         {"Already have an account? "}{" "}
         <Link style={linkStyle} to={"/"}>
           Log in

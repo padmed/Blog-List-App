@@ -1,15 +1,15 @@
 import usePasswordVisibility from "../hooks/usePasswordVisibility";
 import { TextField } from "@mui/material";
-import { inputStyle } from "../styles/styles";
 import PropTypes from "prop-types";
 import InputAdornment from "@mui/material/InputAdornment";
 import ValidationInfo from "./ValidationInfo";
+import { inputLayot } from "../styles/layoutStyles";
 
 const ValidatedTextField = ({
   fieldProps,
   label,
   inputError = false,
-  style = inputStyle,
+  style = inputLayot,
   autoComplete = "off",
 }) => {
   const passwordVisibility = usePasswordVisibility();

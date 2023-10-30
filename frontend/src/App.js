@@ -18,6 +18,7 @@ import SignUpForm from "./components/SignUpForm";
 import NavigationBar from "./components/NavigationBar";
 import useIsMobile from "./hooks/useIsMobile";
 import BottomNavigationBar from "./components/BottomNavigationBar";
+import { loginPageLayout } from "./styles/layoutStyles";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -41,7 +42,7 @@ function App() {
 
   if (!user)
     return (
-      <div style={loginPageStyle}>
+      <div style={{ ...loginPageStyle, ...loginPageLayout }}>
         <Notification />
         <Routes>
           <Route path="/" element={<LoginForm />} />

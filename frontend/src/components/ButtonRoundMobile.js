@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 import DoneIcon from "@mui/icons-material/Done";
 import { roundButtonStyle } from "../styles/styles";
+import { roundButtonLayout } from "../styles/layoutStyles";
 
 const ButtonRoundMobile = ({ type = "add", position, handleClick }) => {
   let icon;
@@ -37,6 +38,7 @@ const ButtonRoundMobile = ({ type = "add", position, handleClick }) => {
         ...buttonStyle,
         ...position,
         ...roundButtonStyle,
+        ...roundButtonLayout,
       }}
       type={type === "submit" ? "submit" : "button"}
     >
