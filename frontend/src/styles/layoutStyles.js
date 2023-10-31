@@ -45,6 +45,7 @@ export const navigationContainerLayout = {
   top: 0,
   left: 0,
   justifyContent: "center",
+  zIndex: "10",
 };
 
 export const appNameLayout = { marginTop: "35px" };
@@ -63,4 +64,17 @@ export const roundButtonLayout = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+};
+
+export const blogsPageLayout = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  marginTop: "50px",
+};
+
+export const blogsFormContainerLayout = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 };

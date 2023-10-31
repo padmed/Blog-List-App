@@ -1,5 +1,8 @@
+import { Button } from "@mui/material";
 import ButtonRoundMobile from "./ButtonRoundMobile";
 import PropTypes from "prop-types";
+import { colors } from "../styles/theme";
+import AddIcon from "@mui/icons-material/Add";
 
 export const AddButton = ({ isMobile, handleClick }) =>
   isMobile ? (
@@ -14,7 +17,19 @@ export const AddButton = ({ isMobile, handleClick }) =>
       }}
     />
   ) : (
-    <button onClick={handleClick}>Create</button>
+    <Button
+      onClick={handleClick}
+      style={{
+        backgroundColor: colors.black,
+        color: colors.beige,
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        height: "50px",
+      }}
+    >
+      <AddIcon /> <span>Add new blog</span>
+    </Button>
   );
 
 export const SubmitButton = ({ isMobile }) =>
@@ -29,9 +44,19 @@ export const SubmitButton = ({ isMobile }) =>
       }}
     />
   ) : (
-    <button id="createBlogButton" type="submit">
+    <Button
+      id="createBlogButton"
+      type="submit"
+      style={{
+        backgroundColor: colors.black,
+        color: colors.beige,
+        marginTop: "30px",
+        marginBottom: "20px",
+        height: "50px",
+      }}
+    >
       Create
-    </button>
+    </Button>
   );
 
 export const CancelButton = ({ isMobile, handleClick }) =>
@@ -47,9 +72,17 @@ export const CancelButton = ({ isMobile, handleClick }) =>
       }}
     />
   ) : (
-    <button type="button" onClick={handleClick}>
+    <Button
+      type="button"
+      onClick={handleClick}
+      style={{
+        backgroundColor: colors.black,
+        color: colors.beige,
+        height: "50px",
+      }}
+    >
       Cancel
-    </button>
+    </Button>
   );
 
 AddButton.propTypes = {

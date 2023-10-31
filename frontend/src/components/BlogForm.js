@@ -5,8 +5,17 @@ import { setNotification } from "../reducers/notificationReducer";
 import useIsMobile from "../hooks/useIsMobile";
 import { formStyle } from "../styles/styles";
 import { Paper, TextField } from "@mui/material";
-import { colors } from "../styles/theme";
 import { AddButton, SubmitButton, CancelButton } from "./ButtonComponents";
+import {
+  blogFormContainerStyle,
+  blogFormContainerMobileStyle,
+} from "../styles/styles";
+import {
+  formLayout,
+  headingLayout,
+  inputLayot,
+  blogsFormContainerLayout,
+} from "../styles/layoutStyles";
 
 const BlogForm = () => {
   const isMobile = useIsMobile();
@@ -45,6 +54,10 @@ const BlogForm = () => {
     }
   };
 
+  const formContainerStyle = isMobile
+    ? blogFormContainerMobileStyle
+    : blogFormContainerStyle;
+
   if (!formVisibility) {
     return <AddButton isMobile={isMobile} handleClick={toggleVisibility} />;
   }
@@ -52,25 +65,17 @@ const BlogForm = () => {
   return (
     <Paper
       elevation={6}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        backgroundColor: colors.beige,
-        height: "400px",
-        borderRadius: "10px",
-      }}
+      style={{ ...formContainerStyle, ...blogsFormContainerLayout }}
     >
-      <h3>Create new</h3>
-      <form onSubmit={handleCreateBlog} style={formStyle}>
+      <h3 style={headingLayout}>Create new</h3>
+      <form onSubmit={handleCreateBlog} style={{ ...formStyle, ...formLayout }}>
         <TextField
           label="Title"
           onChange={handleBlogInputChange}
           value={newBlog.title}
           id="title"
           variant="outlined"
+          style={inputLayot}
         />
         <TextField
           label="Author"
@@ -78,6 +83,7 @@ const BlogForm = () => {
           value={newBlog.author}
           id="author"
           variant="outlined"
+          style={inputLayot}
         />
         <TextField
           label="Url"
@@ -85,6 +91,7 @@ const BlogForm = () => {
           value={newBlog.url}
           id="url"
           variant="outlined"
+          style={inputLayot}
         />
         {isMobile ? (
           <>
