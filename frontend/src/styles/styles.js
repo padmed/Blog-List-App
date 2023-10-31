@@ -80,3 +80,23 @@ export const blogFormContainerMobileStyle = {
   ...blogFormContainerStyle,
   height: "400px",
 };
+
+export const blogStyle = {
+  width: "calc(100% - 40px)",
+  fontSize: "25px",
+  border: "2px solid black",
+};
+
+export const blogAuthorStyle = {
+  fontSize: "18px",
+};
+
+export const blogLinkStyle = {
+  fontSize: "20px",
+  textDecoration: "none",
+  color: colors.black,
+};
+
+export const blogLinkIconStyle = {
+  fontSize: "18px",
+};

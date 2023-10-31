@@ -58,8 +58,6 @@ function App() {
         <div>
           <NavigationBar />
         </div>
-
-        <h2>Blogs</h2>
         <Notification />
       </header>
 

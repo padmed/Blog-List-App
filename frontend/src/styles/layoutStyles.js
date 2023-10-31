@@ -70,11 +70,38 @@ export const blogsPageLayout = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  marginTop: "50px",
+  marginTop: "100px",
 };
 
 export const blogsFormContainerLayout = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+};
+
+export const blogLayout = {
+  margin: "15px",
+  padding: "20px",
+  display: "flex",
+  flexDirection: "column",
+};
+
+export const blogAuthorLayout = {
+  marginLeft: "auto",
+  marginRight: "50px",
+  marginTop: "5px",
+  marginBottom: "10px",
+};
+
+export const blogLinkLayout = {
+  display: "flex",
+  marginTop: "10px",
+  justifyContent: "center",
+};
+
+export const blogLinkTextLayout = { display: "flex", alignItems: "center" };
+
+export const blogLinkIconLayout = {
+  marginLeft: "10px",
+  marginTop: "3px",
 };
