@@ -15,8 +15,8 @@ const BlogsView = () => {
         <Blog
           key={blog.id}
           id={blog.id}
-          author={blog.author}
           title={blog.title}
+          addedBy={blog.user.name}
         />
       ))}
     </div>

@@ -16,12 +16,12 @@ import {
   blogLinkIconLayout,
 } from "../styles/layoutStyles";
 
-const Blog = ({ title, id, author }) => {
+const Blog = ({ title, id, addedBy }) => {
   return (
     <Paper elevation={6} style={{ ...blogStyle, ...blogLayout }}>
       <span>{title}</span>
       <span style={{ ...blogAuthorStyle, ...blogAuthorLayout }}>
-        Added by {author}
+        Added by {addedBy}
       </span>
       <Divider />
       <Link style={{ ...blogLinkStyle, ...blogLinkLayout }} to={`/blogs/${id}`}>
@@ -36,7 +36,7 @@ const Blog = ({ title, id, author }) => {
 
 Blog.propTypes = {
   title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  addedBy: PropTypes.string.isRequired,
 };
 export default Blog;
