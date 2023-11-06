@@ -100,3 +100,7 @@ export const blogLinkStyle = {
 export const blogLinkIconStyle = {
   fontSize: "18px",
 };
+
+export const individualBlogContainerStyle = {
+  border: "2px solid",
+};

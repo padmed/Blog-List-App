@@ -105,3 +105,23 @@ export const blogLinkIconLayout = {
   marginLeft: "10px",
   marginTop: "3px",
 };
+
+export const individualBlogContainerLayout = {
+  marginTop: "100px",
+  padding: "20px",
+  position: "relative",
+};
+
+export const BlogInfoBarLayout = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-around",
+  marginTop: "10px",
+};
+
+export const likesComponentLayout = {
+  display: "flex",
+  alignItems: "center",
+  padding: "5px",
+  marginLeft: "15px",
+};

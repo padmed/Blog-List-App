@@ -28,7 +28,8 @@ export const AddButton = ({ isMobile, handleClick }) =>
         height: "50px",
       }}
     >
-      <AddIcon /> <span>Add new blog</span>
+      <AddIcon style={{ marginRight: "10px", marginBottom: "2px" }} />
+      <span>Add new blog</span>
     </Button>
   );
 
