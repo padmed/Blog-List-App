@@ -25,6 +25,7 @@ import NavigationBar from "./components/NavigationBar";
 import useIsMobile from "./hooks/useIsMobile";
 import BottomNavigationBar from "./components/BottomNavigationBar";
 import { loginPageLayout } from "./styles/layoutStyles";
+import { ROUTES } from "./utils/config";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -63,9 +64,9 @@ function App() {
       <div style={{ ...loginPageStyle, ...loginPageLayout }}>
         <Notification />
         <Routes>
-          <Route path="/" element={<LoginForm />} />
-          <Route path="/signup" element={<SignUpForm />} />
-          <Route path="*" element={<Navigate to={"/"} />} />
+          <Route path={ROUTES.HOME} element={<LoginForm />} />
+          <Route path={ROUTES.SIGNUP} element={<SignUpForm />} />
+          <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
         </Routes>
       </div>
     );
@@ -80,10 +81,10 @@ function App() {
       </header>
 
       <Routes>
-        <Route path="/users/:id" element={<IndividualUserView />} />
-        <Route path="/users" element={<UsersView />} />
-        <Route path="/blogs/:id" element={<IndividualBlogView />} />
-        <Route path="/" element={<BlogsView />} />
+        <Route path={ROUTES.USER_DETAILS} element={<IndividualUserView />} />
+        <Route path={ROUTES.USERS} element={<UsersView />} />
+        <Route path={ROUTES.BLOG_DETAILS} element={<IndividualBlogView />} />
+        <Route path={ROUTES.HOME} element={<BlogsView />} />
       </Routes>
       <footer>{isMobile && <BottomNavigationBar />}</footer>
     </div>
