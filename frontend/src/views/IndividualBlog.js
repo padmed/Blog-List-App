@@ -27,16 +27,22 @@ const IndividualBlogView = () => {
         ...individualBlogContainerLayout,
       }}
     >
-      <h2>{`"${blogToView.title}"`}</h2>
-      <span>Author: {blogToView.author}</span>
-      <div>
+      <h2
+        style={{
+          marginTop: "50px",
+          marginBottom: "40px",
+          textAlign: "center",
+        }}
+      >{`"${blogToView.title}"`}</h2>
+      <span style={{ marginTop: "10px" }}>Author: {blogToView.author}</span>
+      <div style={{ marginTop: "8px" }}>
         Added by{" "}
         {user.username === blogToView.user.username
           ? `you (${user.username})`
           : blogToView.user.name}
         <DeleteBlog blogToDelete={blogToView} />
       </div>
-      <div>
+      <div style={{ marginTop: "8px" }}>
         Link: <Url address={blogToView.url} />
       </div>
       <Divider style={{ marginTop: "30px" }} />
