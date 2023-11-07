@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { setNotification } from "../reducers/notificationReducer";
 import { deleteBlog } from "../reducers/blogReducer";
 import { useNavigate } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { colors } from "../styles/theme";
 
 const DeleteBlog = ({ blogToDelete }) => {
   const loggedUser = useSelector((state) => state.user);
@@ -27,7 +30,14 @@ const DeleteBlog = ({ blogToDelete }) => {
     }
   };
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return (
+    <IconButton
+      onClick={handleDelete}
+      style={{ position: "absolute", top: 10, right: 10 }}
+    >
+      <DeleteIcon style={{ color: colors.red }} />
+    </IconButton>
+  );
 };
 
 DeleteBlog.propTypes = {
