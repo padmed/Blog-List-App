@@ -8,7 +8,13 @@ import UsersView from "./views/UsersView";
 import { useDispatch, useSelector } from "react-redux";
 import { initBlogs } from "./reducers/blogReducer";
 import { login } from "./reducers/userReducer";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import IndividualUserView from "./views/IndividualUser";
 import { initUsers } from "./reducers/allUsersReducer";
 import BlogsView from "./views/BlogsView";
@@ -24,11 +30,8 @@ function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    dispatch(initBlogs());
-    dispatch(initUsers());
-  }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let userInStorage = window.localStorage.getItem("loggedUser");
@@ -38,7 +41,22 @@ function App() {
       dispatch(login(userInStorage));
       blogService.setToken(userInStorage.token);
     }
+
+    dispatch(initBlogs());
+    dispatch(initUsers());
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === "/users") {
+      navigate("/users");
+    } else if (location.pathname.includes("/blogs/")) {
+      const id = location.pathname.replace("/blogs/", "");
+      navigate(`/blogs/${id}`);
+    } else if (location.pathname.includes("/users/")) {
+      const id = location.pathname.replace("/users/", "");
+      navigate(`/users/${id}`);
+    }
+  }, [location.pathname]);
 
   if (!user)
     return (

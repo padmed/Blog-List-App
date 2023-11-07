@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../reducers/userReducer";
 import { useSelector } from "react-redux";
@@ -24,9 +24,11 @@ const NavigationBar = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logoutUser());
+    navigate("/");
   };
 
   if (isMobile) {
