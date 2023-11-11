@@ -3,6 +3,8 @@ import { IconButton } from "@mui/material";
 import clipboardCopy from "clipboard-copy";
 import { useDispatch } from "react-redux";
 import { setNotification } from "../reducers/notificationReducer";
+import { blackToOrangeIcon } from "../styles/styles";
+import { copyUrlLayout } from "../styles/layoutStyles";
 
 const CopyUrlButton = () => {
   const dispatch = useDispatch();
@@ -18,9 +20,9 @@ const CopyUrlButton = () => {
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <IconButton onClick={handleCopyUrl}>
-        <LinkIcon id="linkIcon" style={{ color: "black" }} />
+    <div style={{ ...copyUrlLayout }}>
+      <IconButton onClick={handleCopyUrl} sx={{ ...blackToOrangeIcon }}>
+        <LinkIcon id="linkIcon" />
       </IconButton>
       <label htmlFor={"linkIcon"}>Copy URL</label>
     </div>
