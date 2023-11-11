@@ -1,19 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { setNotification } from "../reducers/notificationReducer";
 import { deleteBlog } from "../reducers/blogReducer";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { colors } from "../styles/theme";
+import { blackToRedIcon } from "../styles/styles";
+import { deleteButtonLayout } from "../styles/layoutStyles";
 
 const DeleteBlog = ({ blogToDelete }) => {
-  const loggedUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  if (loggedUser.username !== blogToDelete.user.username) {
-    return null;
-  }
 
   const handleDelete = async () => {
     const confirmation = window.confirm(`Delete ${blogToDelete.title}?`);
@@ -33,9 +30,9 @@ const DeleteBlog = ({ blogToDelete }) => {
   return (
     <IconButton
       onClick={handleDelete}
-      style={{ position: "absolute", top: 10, right: 10 }}
+      sx={{ ...blackToRedIcon, ...deleteButtonLayout }}
     >
-      <DeleteIcon style={{ color: colors.red }} />
+      <DeleteIcon />
     </IconButton>
   );
 };
