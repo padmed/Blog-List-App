@@ -36,14 +36,6 @@ export const copyrightStyle = {
   fontSize: "15px",
 };
 
-// export const wrongPasswordStyle = {
-//   height: "20px",
-//   marginTop: "5px",
-//   color: colors.red,
-//   marginLeft: "5px",
-//   fontSize: "15px",
-// };
-
 export const navigationContainerStyle = {
   height: "60px",
   width: "100%",
@@ -61,6 +53,9 @@ export const logoutButtonStyle = {
   color: colors.beige,
   fontSize: "12px",
   textTransform: "none",
+  "&:hover": {
+    backgroundColor: colors.red,
+  },
 };
 
 export const roundButtonStyle = {
@@ -103,4 +98,43 @@ export const blogLinkIconStyle = {
 
 export const individualBlogContainerStyle = {
   border: "2px solid",
+};
+
+export const commentInputStyle = {
+  width: "80%",
+  minWidth: "200px",
+};
+
+export const submitButtonStyle = {
+  backgroundColor: colors.black,
+  color: "beige",
+  width: "150px",
+  "&:hover": {
+    backgroundColor: colors.green,
+  },
+};
+
+export const commentStyle = {
+  backgroundColor: colors.beige,
+  overflow: "hidden",
+  whiteSpace: "break-spaces",
+  border: "1px solid",
+};
+
+export const blackToRedIcon = {
+  color: "black",
+  "&:hover": {
+    color: colors.red,
+  },
+};
+
+export const blackToOrangeIcon = {
+  color: "black",
+  "&:hover": {
+    color: colors.orange,
+  },
+};
+
+export const likeButtonStyle = {
+  fontSize: "17px",
 };

@@ -125,3 +125,25 @@ export const likesComponentLayout = {
   padding: "5px",
   marginLeft: "15px",
 };
+
+export const commentInputLayout = {
+  marginTop: "50px",
+};
+
+export const commentButtonLayout = {
+  marginTop: "20px",
+  marginBottom: "34px",
+};
+
+export const commentFormLayout = { display: "flex", flexDirection: "column" };
+
+export const commentLayout = {
+  marginBottom: "15px",
+  marginTop: "15px",
+};
+
+export const likeButtonLayout = { marginRight: "4px" };
+
+export const deleteButtonLayout = { position: "absolute", top: 10, right: 10 };
+
+export const copyUrlLayout = { display: "flex", alignItems: "center" };
