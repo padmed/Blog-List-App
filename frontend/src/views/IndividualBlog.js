@@ -19,6 +19,8 @@ const IndividualBlogView = () => {
     return null;
   }
 
+  const blogCreatedByUser = user.id === blogToView.user.id;
+
   return (
     <Paper
       elevation={6}
@@ -27,6 +29,7 @@ const IndividualBlogView = () => {
         ...individualBlogContainerLayout,
       }}
     >
+      {blogCreatedByUser && <DeleteBlog blogToDelete={blogToView} />}
       <h2
         style={{
           marginTop: "50px",
@@ -37,10 +40,7 @@ const IndividualBlogView = () => {
       <span style={{ marginTop: "10px" }}>Author: {blogToView.author}</span>
       <div style={{ marginTop: "8px" }}>
         Added by{" "}
-        {user.username === blogToView.user.username
-          ? `you (${user.username})`
-          : blogToView.user.name}
-        <DeleteBlog blogToDelete={blogToView} />
+        {blogCreatedByUser ? `you (${user.username})` : blogToView.user.name}
       </div>
       <div style={{ marginTop: "8px" }}>
         Link: <Url address={blogToView.url} />
