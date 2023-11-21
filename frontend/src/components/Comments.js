@@ -15,6 +15,7 @@ import {
   commentButtonLayout,
   commentFormLayout,
   commentLayout,
+  commentsContLayout,
 } from "../styles/layoutStyles";
 
 const Comments = ({ commentsOfBlog }) => {
@@ -50,10 +51,10 @@ const Comments = ({ commentsOfBlog }) => {
         </Button>
       </form>
       {commentsOfBlog.length > 0 && <h4>Comments</h4>}
-      <List>
+      <List style={{ ...commentsContLayout }}>
         {commentsOfBlog.map((comment) => (
           <Paper
-            elevation={2}
+            elevation={4}
             key={uuidv4()}
             style={{ ...commentStyle, ...commentLayout }}
           >
