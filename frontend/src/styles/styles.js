@@ -115,10 +115,10 @@ export const submitButtonStyle = {
 };
 
 export const commentStyle = {
-  backgroundColor: colors.beige,
   overflow: "hidden",
   whiteSpace: "break-spaces",
-  border: "1px solid",
+  border: "2px solid",
+  maxWidth: "100%",
 };
 
 export const blackToRedIcon = {

@@ -135,11 +135,20 @@ export const commentButtonLayout = {
   marginBottom: "34px",
 };
 
-export const commentFormLayout = { display: "flex", flexDirection: "column" };
+export const commentFormLayout = {
+  display: "flex",
+  flexDirection: "column",
+};
+
+export const commentsContLayout = {
+  display: "flex",
+  justifyContent: "space-around",
+  flexWrap: "wrap",
+};
 
 export const commentLayout = {
-  marginBottom: "15px",
-  marginTop: "15px",
+  margin: "15px",
+  width: "min-content",
 };
 
 export const likeButtonLayout = { marginRight: "4px" };
