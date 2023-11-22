@@ -18,19 +18,15 @@ const UserDetailsDropdown = ({ user }) => {
 
   return (
     <>
-      <TableRow sx={{ "& > *": { borderBottom: "none" } }}>
-        <TableCell sx={{ fontSize: "20px", borderBottom: "none" }}>
+      <TableRow sx={{ "*": { fontSize: "min(20px, 3vw)" } }}>
+        <TableCell sx={{ borderBottom: "none" }}>
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
           {user.username}
         </TableCell>
-        <TableCell sx={{ fontSize: "20px", borderBottom: "none" }}>
-          {user.name}
-        </TableCell>
-        <TableCell sx={{ fontSize: "20px", borderBottom: "none" }}>
-          {user.blogs.length}
-        </TableCell>
+        <TableCell sx={{ borderBottom: "none" }}>{user.name}</TableCell>
+        <TableCell sx={{ borderBottom: "none" }}>{user.blogs.length}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
