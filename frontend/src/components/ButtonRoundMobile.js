@@ -9,26 +9,14 @@ import { roundButtonLayout } from "../styles/layoutStyles";
 
 const ButtonRoundMobile = ({ type = "add", position, handleClick }) => {
   let icon;
-  let buttonStyle = {};
+  let buttonStyle = { backgroundColor: colors.black, color: colors.beige };
 
   if (type === "add") {
     icon = <AddIcon style={{ fontSize: "45px" }} />;
-    buttonStyle = {
-      backgroundColor: colors.black,
-      color: colors.beige,
-    };
   } else if (type === "cancel") {
     icon = <CloseIcon style={{ fontSize: "45px" }} />;
-    buttonStyle = {
-      backgroundColor: colors.orange,
-      color: colors.beige,
-    };
   } else if (type === "submit") {
     icon = <DoneIcon style={{ fontSize: "45px" }} />;
-    buttonStyle = {
-      backgroundColor: colors.green,
-      color: colors.beige,
-    };
   }
 
   return (
