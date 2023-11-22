@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import ButtonRoundMobile from "./ButtonRoundMobile";
 import PropTypes from "prop-types";
 import { colors } from "../styles/theme";
-import AddIcon from "@mui/icons-material/Add";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
 
 export const AddButton = ({ isMobile, handleClick }) =>
   isMobile ? (
@@ -19,16 +19,22 @@ export const AddButton = ({ isMobile, handleClick }) =>
   ) : (
     <Button
       onClick={handleClick}
-      style={{
+      sx={{
         backgroundColor: colors.black,
         color: colors.beige,
         display: "flex",
         alignItems: "center",
-        width: "100%",
         height: "50px",
+        width: "200px",
+        position: "fixed",
+        bottom: 70,
+        ":hover": {
+          backgroundColor: "green",
+        },
+        borderRadius: "10px",
       }}
     >
-      <AddIcon style={{ marginRight: "10px", marginBottom: "2px" }} />
+      <NoteAddIcon style={{ marginRight: "10px", marginBottom: "2px" }} />
       <span>Add new blog</span>
     </Button>
   );
@@ -39,8 +45,8 @@ export const SubmitButton = ({ isMobile }) =>
       type="submit"
       position={{
         position: "fixed",
-        bottom: 40,
-        left: "60%",
+        bottom: 50,
+        left: "65%",
         transform: "translate(-50%, -50%)",
       }}
     />
@@ -67,8 +73,8 @@ export const CancelButton = ({ isMobile, handleClick }) =>
       type="cancel"
       position={{
         position: "fixed",
-        bottom: 40,
-        left: "40%",
+        bottom: 50,
+        left: "35%",
         transform: "translate(-50%, -50%)",
       }}
     />
