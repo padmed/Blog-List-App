@@ -5,12 +5,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const MobileNavMenu = ({ handleLogout, user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
   const logedUser = useSelector((state) =>
     state.allUsers.find((u) => u.username === user.username),
   );
@@ -21,10 +19,6 @@ const MobileNavMenu = ({ handleLogout, user }) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleProfileClick = () => {
-    navigate(`/users/${logedUser.id}`);
   };
 
   if (!logedUser) return null;
@@ -72,7 +66,7 @@ const MobileNavMenu = ({ handleLogout, user }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleProfileClick}>
+        <MenuItem>
           <AccountCircleIcon />
           <Typography style={{ marginLeft: "7px" }}>
             {logedUser.name}
