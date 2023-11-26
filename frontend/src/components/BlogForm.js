@@ -29,6 +29,14 @@ const BlogForm = () => {
 
   const toggleVisibility = () => setFormVisibility(!formVisibility);
 
+  const showForm = () => {
+    toggleVisibility();
+    window.scrollTo({
+      top: 10,
+      behavior: "smooth",
+    });
+  };
+
   const handleBlogInputChange = ({ target }) => {
     const { id, value } = target;
 
@@ -59,7 +67,7 @@ const BlogForm = () => {
     : blogFormContainerStyle;
 
   if (!formVisibility) {
-    return <AddButton isMobile={isMobile} handleClick={toggleVisibility} />;
+    return <AddButton isMobile={isMobile} handleClick={showForm} />;
   }
 
   return (
@@ -70,7 +78,7 @@ const BlogForm = () => {
       <h3 style={headingLayout}>Create new</h3>
       <form onSubmit={handleCreateBlog} style={{ ...formStyle, ...formLayout }}>
         <TextField
-          label="Title"
+          label="Content"
           onChange={handleBlogInputChange}
           value={newBlog.title}
           id="title"
@@ -93,17 +101,33 @@ const BlogForm = () => {
           variant="outlined"
           style={inputLayot}
         />
-        {isMobile ? (
-          <>
-            <CancelButton isMobile={isMobile} handleClick={toggleVisibility} />
-            <SubmitButton isMobile={isMobile} />
-          </>
-        ) : (
-          <>
-            <SubmitButton isMobile={isMobile} />
-            <CancelButton isMobile={isMobile} handleClick={toggleVisibility} />
-          </>
-        )}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "20px",
+            marginBottom: "40px",
+          }}
+        >
+          {isMobile ? (
+            <>
+              <CancelButton
+                isMobile={isMobile}
+                handleClick={toggleVisibility}
+              />
+              <SubmitButton isMobile={isMobile} />
+            </>
+          ) : (
+            <>
+              <SubmitButton isMobile={isMobile} />
+              <CancelButton
+                isMobile={isMobile}
+                handleClick={toggleVisibility}
+              />
+            </>
+          )}
+        </div>
       </form>
     </Paper>
   );

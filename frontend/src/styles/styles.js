@@ -66,9 +66,8 @@ export const roundButtonStyle = {
 
 export const blogFormContainerStyle = {
   width: "100%",
-  backgroundColor: colors.beige,
   height: "540px",
-  borderRadius: "10px",
+  border: "2px solid",
 };
 
 export const blogFormContainerMobileStyle = {

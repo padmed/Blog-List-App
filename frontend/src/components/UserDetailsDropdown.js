@@ -18,7 +18,11 @@ const UserDetailsDropdown = ({ user }) => {
 
   return (
     <>
-      <TableRow sx={{ "*": { fontSize: "min(20px, 3vw)" } }}>
+      <TableRow
+        sx={{
+          "*": { fontSize: "min(20px, 3vw)" },
+        }}
+      >
         <TableCell sx={{ borderBottom: "none" }}>
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

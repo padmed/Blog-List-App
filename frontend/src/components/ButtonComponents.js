@@ -28,10 +28,10 @@ export const AddButton = ({ isMobile, handleClick }) =>
         width: "200px",
         position: "fixed",
         bottom: 70,
+        borderRadius: "10px",
         ":hover": {
           backgroundColor: "green",
         },
-        borderRadius: "10px",
       }}
     >
       <NoteAddIcon style={{ marginRight: "10px", marginBottom: "2px" }} />
@@ -54,12 +54,17 @@ export const SubmitButton = ({ isMobile }) =>
     <Button
       id="createBlogButton"
       type="submit"
-      style={{
+      sx={{
         backgroundColor: colors.black,
         color: colors.beige,
         marginTop: "30px",
         marginBottom: "20px",
         height: "50px",
+        width: "300px",
+        borderRadius: "10px",
+        ":hover": {
+          backgroundColor: `${colors.green}`,
+        },
       }}
     >
       Create
@@ -82,10 +87,15 @@ export const CancelButton = ({ isMobile, handleClick }) =>
     <Button
       type="button"
       onClick={handleClick}
-      style={{
+      sx={{
         backgroundColor: colors.black,
         color: colors.beige,
         height: "50px",
+        width: "300px",
+        borderRadius: "10px",
+        ":hover": {
+          backgroundColor: `${colors.red}`,
+        },
       }}
     >
       Cancel

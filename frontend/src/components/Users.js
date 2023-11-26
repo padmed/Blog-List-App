@@ -32,9 +32,15 @@ const Users = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontSize: "20px" }}>Username</TableCell>
-              <TableCell sx={{ fontSize: "20px" }}>Name</TableCell>
-              <TableCell sx={{ fontSize: "20px" }}>Blogs Created</TableCell>
+              <TableCell sx={{ fontSize: "20px", width: "100px" }}>
+                Username
+              </TableCell>
+              <TableCell sx={{ fontSize: "20px", width: "100px" }}>
+                Name
+              </TableCell>
+              <TableCell sx={{ fontSize: "20px", width: "100px" }}>
+                Blogs Created
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
