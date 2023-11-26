@@ -53,9 +53,6 @@ function App() {
     } else if (location.pathname.includes("/blogs/")) {
       const id = location.pathname.replace("/blogs/", "");
       navigate(`/blogs/${id}`);
-    } else if (location.pathname.includes("/users/")) {
-      const id = location.pathname.replace("/users/", "");
-      navigate(`/users/${id}`);
     }
   }, [location.pathname]);
 
