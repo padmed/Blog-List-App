@@ -9,6 +9,9 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const Notification = () => {
   const notification = useSelector((state) => state.notification);
+
+  if (notification.status === null) return null;
+
   const type = notification.status ? "success" : "error";
 
   return (
