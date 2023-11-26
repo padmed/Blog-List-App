@@ -55,7 +55,7 @@ const BlogForm = () => {
         author: "",
         url: "",
       });
-      dispatch(setNotification(`A new blog "${newBlog.title}" added`, true));
+      dispatch(setNotification("New blog added", true));
       toggleVisibility();
     } catch (error) {
       dispatch(setNotification(error.response.data.errorMessage, false));
