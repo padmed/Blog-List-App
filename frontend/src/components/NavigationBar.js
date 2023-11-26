@@ -54,6 +54,7 @@ const NavigationBar = () => {
         <span className="appName" style={appNameNavLayout}>
           BlogBinder
         </span>
+
         <Typography sx={{ flexGrow: 1 }}>
           <Link
             to={"/"}
