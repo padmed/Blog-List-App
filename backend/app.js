@@ -35,13 +35,14 @@ app.use(express.json());
 app.use(requestLogger);
 app.use(tokenExtractor);
 app.use(express.static("build"));
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 if (process.env.NODE_ENV === "test") {
   app.use("/api/testing", testingRouter);
