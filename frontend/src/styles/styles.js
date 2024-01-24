@@ -118,6 +118,7 @@ export const commentStyle = {
   whiteSpace: "break-spaces",
   border: "2px solid",
   maxWidth: "100%",
+  minWidth: "300px",
 };
 
 export const blackToRedIcon = {
