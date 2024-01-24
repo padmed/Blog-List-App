@@ -9,6 +9,7 @@ const logger = require("./utils/logger");
 const blogRouter = require("./controllers/blogs");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const path = require("path");
 
 const testingRouter = require("./controllers/testMode");
 const {
@@ -16,6 +17,7 @@ const {
   requestLogger,
   unknownEndpoint,
   tokenExtractor,
+  serveIndexHtml,
 } = require("./utils/middleware");
 
 logger.info("Connecting to MongoDB");
@@ -28,11 +30,14 @@ mongoose
     logger.error(`Cannot connect to MongoDB: ${e.message}`);
   });
 
-  app.use(cors()); 
-  app.use(express.json());
-  app.use(requestLogger);
-  app.use(tokenExtractor);
-  app.use(express.static('build'))
+app.use(cors());
+app.use(express.json());
+app.use(requestLogger);
+app.use(tokenExtractor);
+app.use(express.static("build"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
